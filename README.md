@@ -5,7 +5,8 @@ How to start development server
 1. Make sure you have python3 and pip3 installed
 2. Go to the project directory and start the virtual environment
 ```
-source venv/bin/activate
+python3 -m venv [name]
+source [name]/bin/activate
 ```
 3. Install project dependencies in your virtual environment. This makes sure that all of our dependencies are synced up:
 

@@ -15,3 +15,6 @@ def home():
 @app.route("/workspace")
 def workspace():
 	return("This is your workspace page")
+
+if __name__ == '__main__':
+    app.run(debug=True)

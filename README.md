@@ -18,3 +18,9 @@ pip3 install -r requirements.txt
 ```
 pip3 freeze > requirements.txt
 ```
+
+5. How to create a branch
+
+```
+git checkout -b [name]
+```

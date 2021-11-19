@@ -10,7 +10,7 @@ source venv/bin/activate
 3. Install project dependencies in your virtual environment. This makes sure that all of our dependencies are synced up:
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 4. If you install other dependencies later, make sure to include them in requirements.txt by typing the command:

@@ -1,4 +1,4 @@
-.wrapper {
+ .wrapper {
     display: flex;
     width: 100%;
     align-items: stretch;
@@ -43,9 +43,8 @@ a[data-toggle="collapse"] {
     
     text-align:center;
 }
-/*
-    ADDITIONAL DEMO STYLE, NOT IMPORTANT TO MAKE THINGS WORK BUT TO MAKE IT A BIT NICER :)
-*/
+
+
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
@@ -69,7 +68,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
+    
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
@@ -108,4 +107,4 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #6d7fcc;
-}
+} 

@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/") 
 def index():
-    return ("Welcome to NoteBuddy")
+    return render_template("homepage.html")
 
 @app.route("/home")
 def home():

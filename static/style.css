@@ -36,10 +36,12 @@ a[data-toggle="collapse"] {
 }
 
 .list-unstyled h4{
-    padding-left: 15%
+    text-align:center;
 }
-.list-unstyled p{
-    padding-left: 30%
+
+.list-unstyled h6{
+    
+    text-align:center;
 }
 /*
     ADDITIONAL DEMO STYLE, NOT IMPORTANT TO MAKE THINGS WORK BUT TO MAKE IT A BIT NICER :)

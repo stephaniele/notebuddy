@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/") 
 def index():
-    return ("Welcome to NoteBuddy")
+    return render_template("homepage.html")
 
 @app.route("/home")
 def home():
@@ -14,7 +14,7 @@ def home():
 
 @app.route("/workspace")
 def workspace():
-	return("This is your workspace page")
+	return render_template("workspace.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

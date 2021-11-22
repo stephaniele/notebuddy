@@ -3,9 +3,42 @@
   --col2: #d30164;
 }
 
-
 body {
 	background-color: var(--col1);
+}
+
+ul{
+	list-style-type: none;
+	justify-content: center;
+	padding: 0px;
+	margin:0px;
+	overflow: scroll;
+	height:100%;
+}
+
+li{
+	text-align: center;
+}
+
+img{
+	width:100px;
+}
+
+h2{
+	margin:0px;
+}
+
+#add-button{
+	background-image: url("/static/add.png");
+	position:absolute;
+	width: 60px;
+	top:85%;
+	left: 80%;
+}
+
+#main-container{
+	display: flex;
+	overflow:auto;
 }
 
 #top-bar{
@@ -17,9 +50,28 @@ body {
 	font-family: "Garamond", serif;
 	height: 4rem;
 }
+.day{
+	margin-top:10px;
+	display: flex;
+	align-content: space-around;
+}
+.file:hover .file-img{
+	opacity: 0.3;
+}
+.file:hover .file-name{
+	opacity: 1;
+}
+.file-name{
+	transition: .5s ease;
+	position: relative;
+	opacity:0;
+	width:100px;
+	height:0px;
+	font-size:13px;
+	text-align: center;
+	font:bold;
+	transform: translateY(-60px)
 
-h2{
-	margin:0px;
 }
 
 #side-bar{
@@ -44,21 +96,28 @@ h2{
 	
 }
 
-.profile-pic{
+.side-profile-pic{
 	max-width: 80px;
 	border-radius: 50%;
 	margin: 10px;
 }
-
-ul{
-	list-style-type: none;
-	justify-content: center;
-	padding: 0px;
-	margin:0px;
-	overflow: scroll;
-	height:100%;
+.file-profile-pic{
+	max-width: 20px;
+	border-radius: 50%;
+	margin: 10px;
+	margin-left: 15px;
 }
-
-li{
-	text-align: center;
+.heart{
+	width:20px;
+	height:20px;
+	margin-right:5px;
+}
+.likes-container{
+	display: inline-block;
+	margin-top: 10px;
+}
+.img-info{
+	display: flex;
+	align-content:space-around;
+	align-items: center;
 }

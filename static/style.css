@@ -171,23 +171,11 @@ h2{
 	display: flex;
 	align-content: space-around;
 }
-.file:hover .file-img{
-	opacity: 0.3;
-}
-.file:hover .file-name{
-	opacity: 1;
-}
 .file-name{
-	transition: .5s ease;
-	position: relative;
-	opacity:0;
 	width:100px;
-	height:0px;
 	font-size:13px;
 	text-align: center;
 	font:bold;
-	transform: translateY(-60px)
-
 }
 
 #side-bar{

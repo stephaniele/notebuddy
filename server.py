@@ -8,6 +8,14 @@ app = Flask(__name__)
 def index():
     return ("Welcome to NoteBuddy")
 
+@app.route("/sign_in")
+def sign_in():
+	return render_template("accountform.html", action = "/sign_in", title = "Sign In")
+
+@app.route("/create_account")
+def create_account():
+	return render_template("accountform.html", action = "/create_account", title = "Create Account")
+
 @app.route("/home")
 def home():
 	return("This is where your workspaces are")
@@ -15,3 +23,7 @@ def home():
 @app.route("/workspace")
 def workspace():
 	return("This is your workspace page")
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

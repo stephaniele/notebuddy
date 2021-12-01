@@ -112,9 +112,10 @@ ul ul a {
 }
 
 body {
-	background-color: var(--col1);
 	height:100%;
 	overflow:hidden;
+	background: rgb(238,174,202);
+	background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 ul{
@@ -162,8 +163,6 @@ h2{
     justify-content: center;
     align-items: center;
 	background-color: white;
-	color: var(--col2);
-	font-family: "Garamond", serif;
 	height: 4rem;
 }
 .day{
@@ -179,9 +178,9 @@ h2{
 }
 
 #side-bar{
-	background-color: var(--col2);
 	justify-content: center;
 	position: absolute;
+	background-color: white;
 	height:80%;
 	width: 10%;
 	left:90%;

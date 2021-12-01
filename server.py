@@ -12,6 +12,14 @@ def index():
 def home():
 	return("This is where your workspaces are")
 
+@app.route("/sign_in")
+def sign_in():
+	return render_template("accountform.html", action = "/sign_in", title = "Sign In")
+
+@app.route("/create_account")
+def create_account():
+	return render_template("accountform.html", action = "/create_account", title = "Create Account")
+
 @app.route("/workspace")
 def workspace():
 	return render_template("workspace.html")

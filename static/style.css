@@ -112,7 +112,10 @@ ul ul a {
 }
 
 body {
-	background-color: var(--col1);
+	height:100%;
+	overflow:hidden;
+	background: rgb(238,174,202);
+	background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 ul{
@@ -145,8 +148,14 @@ h2{
 }
 
 #main-container{
+	height:95%;
 	display: flex;
-	overflow:auto;
+	overflow:scroll;
+}
+
+#days{
+	height:95%;
+	overflow:scroll;
 }
 
 #top-bar{
@@ -154,8 +163,6 @@ h2{
     justify-content: center;
     align-items: center;
 	background-color: white;
-	color: var(--col2);
-	font-family: "Garamond", serif;
 	height: 4rem;
 }
 .day{
@@ -163,29 +170,17 @@ h2{
 	display: flex;
 	align-content: space-around;
 }
-.file:hover .file-img{
-	opacity: 0.3;
-}
-.file:hover .file-name{
-	opacity: 1;
-}
 .file-name{
-	transition: .5s ease;
-	position: relative;
-	opacity:0;
 	width:100px;
-	height:0px;
 	font-size:13px;
 	text-align: center;
 	font:bold;
-	transform: translateY(-60px)
-
 }
 
 #side-bar{
-	background-color: var(--col2);
 	justify-content: center;
 	position: absolute;
+	background-color: white;
 	height:80%;
 	width: 10%;
 	left:90%;

@@ -1,8 +1,11 @@
 import os
 from flask import Flask, flash, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
+# from database import Database
 
 app = Flask(__name__)
+# db = Database(app)
+# db.create_all()
 
 @app.route("/") 
 def index():

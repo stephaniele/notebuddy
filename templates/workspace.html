@@ -9,18 +9,94 @@
     <!-- Awsome Font -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block content %}
 
-<div id ="top-bar">
+<!-- <div id ="top-bar">
 	 <span class="h1 mb-0">NoteBuddy</span>
-</div>
+</div> -->
 
 <div id="main-container">
+	<div class="h1 mb-0" id="workspace-name">COMP 446</div>
 	<div class="container" id="days">
 		<div class="row day">
-			<h3 class="dayofWeek">Wednesday</h3>
+			<h3 class="dayofWeek" data-toggle="collapse" data-target=".file-container">Wednesday</h3>
+			<hr>
+			<div class="col file-container">
+				<div class="file">
+					<div class="file-name">flask-note</div>
+					<img class="file-img" src="/static/docs.png">
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">5</span>
+				</div>
+			</div>
+
+			<div class=" col file-container">
+				<div class="file">
+					<div class="file-name">Flask</div>
+					<img class="file-img" src="/static/pdf.png">
+					
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">5</span>
+				</div>
+			</div>
+			<div class=" col file-container">
+				<div class="file">
+					<div class="file-name">11-17-21</div>
+					<img class="file-img" src="/static/docs.png">
+					
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">2</span>
+				</div>
+			</div>
+			<div class="col file-container">
+				<div class="file">
+					<div class="file-name">flask-note</div>
+					<img class="file-img" src="/static/docs.png">
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">5</span>
+				</div>
+			</div>
+			<div class="col file-container">
+				<div class="file">
+					<div class="file-name">flask-note</div>
+					<img class="file-img" src="/static/docs.png">
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">5</span>
+				</div>
+			</div>
+			<div class="col file-container">
+				<div class="file">
+					<div class="file-name">comp449-flask</div>
+					<img class="file-img" src="/static/docs.png">
+					
+				</div>
+				<div class="img-info">
+					<img class="file-profile-pic" src="/static/person.jpg">
+					<img class="heart" src="/static/heart.png">
+					<span class="likes">1</span>
+				</div>
+			</div>
+		</div>
+		<div class="row day">
+			<h3 class="dayofWeek" data-toggle="collapse">Monday</h3>
 			<hr>
 			<div class="col file-container">
 				<div class="file">
@@ -71,31 +147,8 @@
 			</div>
 		</div>
 		<div class="row day">
-			<h3 class="dayofWeek">Monday</h3>
+			<h3 class="dayofWeek" data-toggle="collapse">Friday</h3>
 			<hr>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">flask-note</div>
-					<img class="file-img" src="/static/docs.png">
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
 			<div class=" col file-container">
 				<div class="file">
 					<div class="file-name">11-17-21</div>
@@ -122,58 +175,7 @@
 			</div>
 		</div>
 		<div class="row day">
-			<h3 class="dayofWeek">Friday</h3>
-			<hr>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">flask-note</div>
-					<img class="file-img" src="/static/docs.png">
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">11-17-21</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">2</span>
-				</div>
-			</div>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">comp449-flask</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">1</span>
-				</div>
-			</div>
-		</div>
-		<div class="row day">
-			<h3 class="dayofWeek">Wednesday</h3>
+			<h3 class="dayofWeek" data-toggle="collapse">Wednesday</h3>
 			<hr>
 			<div class="col file-container">
 				<div class="file">
@@ -225,9 +227,9 @@
 		</div>
 		
 	</div>
-	<img src="/static/add.png" id ="add-button" onclick="DoSomething();"/>
-
-	<div id="side-bar">
+<!-- 	<img src="/static/add.png" id ="add-button" onclick="DoSomething();"/>
+ -->
+	<!-- <div id="side-bar">
 		<ul>
 			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
 			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
@@ -242,13 +244,23 @@
 			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
 
 		</ul>
-	</div>
+	</div> -->
 
-	<div id="invite">
+<!-- 	<div id="invite">
 		<input type="button" id="invite-button" value="Invite">
-	</div>
+	</div> -->
 </div>
 
+<script type="text/javascript">
+
+	// $(".dayofWeek").click(function(){
+	// 	$(this).attr("data-target",".file-container")
+	// })
+
+	// $(".dayofWeek").attr("data-target",".file-container")
+
+	
+</script>
 
 
 {% endblock %}

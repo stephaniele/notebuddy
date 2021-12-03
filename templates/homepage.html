@@ -11,7 +11,6 @@
     <!-- Awsome Font -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    
     <title>Welcome to notebuddy</title>
   </head>
 
@@ -27,47 +26,127 @@
                 <h4 >Qingru Zhang</h4>
                 <h6> Macalester College </h6>
                 <li>
-                    <a href="#">About</a>
+                  <a  data-bs-toggle="modal" data-bs-target="#ProfileModal">
+                    Edit Profile Information
+                  </a>                  
                 </li>
                 <li>
-                    <a href="#">Create a Workspace</a>
+                  <a  data-bs-toggle="modal" data-bs-target="#CreateModal">
+                    Create a Workspace
+                  </a> 
                 </li>
                 <li>
-                    <a href="#">Join a Workspace</a>
+                  <a  data-bs-toggle="modal" data-bs-target="#JoinModal">
+                    Join a Workspace
+                  </a> 
                 </li>
+                
                 <li>
-                    <a href="#">Profile Information</a>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Change Passwprd</a>
-                        </li>
-                        <li>
-                            <a href="#">Delete Account</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Sign Out</a>
+                    <a href="/sign_in">Sign Out</a>
                 </li>
             </ul>
         </nav>
+        
+
+
+        <!-- Modals of the page -->
+        <div class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="exampleInputName1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName2" class="form-label">School Name</label>
+                    <input type="text" class="form-control" id="exampleInputName2">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail" class="form-label">Email</label>
+                    <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="qzhang1@macalester.edu">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword" class="form-label">Password</label>
+                    <input readonly type="password" class="form-control" id="exampleInputPassword" placeholder="123456789">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="CreateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create a Workspace</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Workspace Name</label>
+                    <input type="text" class="form-control" id="exampleInputName1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="date-picker-example" class="form-label">Start Date</label>
+                    <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName2" class="form-label">End Date</label>
+                    <input type="text" class="form-control" id="exampleInputName2">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName2" class="form-label">Days of Week</label>
+                    <input type="text" class="form-control" id="exampleInputName2">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="JoinModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Join a Workspace</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Workspace Link</label>
+                    <input type="text" class="form-control" id="exampleInputName1">
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary">Join</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          
 
         <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-        
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span></span>
-                    </button>
-                    
-                </div>
-            </nav>
-
-            <div class="container">
+            <div class="container mt-4">
                 <div class="row  justify-content-center">
                     <div class="col-md-4">
                         <h1>Your Workspaces</h1>
@@ -89,7 +168,23 @@
                           <p class="card-text">Workspace Name</p>
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                              <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
+            
+                        <div class="card-body">
+                          <p class="card-text">Workspace Name</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                              <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                               <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                             </div>
                           </div>
@@ -105,7 +200,7 @@
                             <p class="card-text">Workspace Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                               </div>
                             </div>
@@ -121,7 +216,7 @@
                             <p class="card-text">Workspace Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                               </div>
                             </div>
@@ -137,7 +232,7 @@
                             <p class="card-text">Workspace Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                               </div>
                             </div>
@@ -153,7 +248,7 @@
                             <p class="card-text">Workspace Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                               </div>
                             </div>
@@ -169,7 +264,7 @@
                             <p class="card-text">Workspace Name</p>
                             <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Enter</button>
+                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                               </div>
                             </div>
@@ -191,11 +286,7 @@
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
+      $('.datepicker').pickadate();
     </script>
   </body>
 </html>

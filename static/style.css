@@ -101,11 +101,15 @@ a, a:hover, a:focus {
     color: #fff;
     background: #6d7fcc;
 }
+
+/*
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #6d7fcc;
 } 
+
+
 :root {
   --col1: #13cdd4;
   --col2: #d30164;
@@ -130,6 +134,7 @@ ul{
 li{
 	text-align: center;
 }
+
 
 img{
 	width:100px;
@@ -165,6 +170,7 @@ h2{
 	background-color: white;
 	height: 4rem;
 }
+
 .day{
 	margin-top:10px;
 	display: flex;
@@ -175,7 +181,7 @@ h2{
 	font-size:13px;
 	text-align: center;
 	font:bold;
-}
+} 
 
 #side-bar{
 	justify-content: center;
@@ -184,7 +190,7 @@ h2{
 	height:80%;
 	width: 10%;
 	left:90%;
-}
+} 
 
 #invite{
 	position:absolute;
@@ -223,4 +229,5 @@ h2{
 	display: flex;
 	align-content:space-around;
 	align-items: center;
-}
+} 
+*/

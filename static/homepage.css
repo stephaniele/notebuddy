@@ -50,7 +50,8 @@ a[data-toggle="collapse"] {
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 p {
@@ -105,8 +106,6 @@ a, a:hover, a:focus {
 }
 
 #content {
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
     margin-left: 16%;
     padding-left: 2%;
 }

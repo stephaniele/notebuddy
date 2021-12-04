@@ -106,19 +106,19 @@ ul ul a {
     padding-left: 30px !important;
     background: #6d7fcc;
 } 
-:root {
+/*:root {
   --col1: #13cdd4;
   --col2: #d30164;
-}
+}*/
 
-body {
+/*body {
 	height:100%;
 	overflow:hidden;
 	background: rgb(238,174,202);
 	background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-}
+}*/
 
-ul{
+/*ul{
 	list-style-type: none;
 	justify-content: center;
 	padding: 0px;
@@ -229,4 +229,4 @@ h2{
 	display: flex;
 	align-content:space-around;
 	align-items: center;
-}
+}*/

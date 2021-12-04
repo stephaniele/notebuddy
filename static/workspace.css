@@ -39,12 +39,12 @@ h2{
 #main-container{
     height:100%;
     display:flex;
-    overflow:scroll;
+    overflow:hidden;
     align-items: right;
 }
 
 #days{
-    height:90%;
+    height:100%;
     width: 80%;
     overflow:scroll;
     overflow-x: hidden;
@@ -52,6 +52,11 @@ h2{
 
 #workspace-header{
     text-align: center;
+}
+
+#workspace-description{
+    text-align: center;
+    padding: 5px;
 }
 
 #workspace-name{
@@ -169,7 +174,7 @@ h2{
 }
 #sidebar {
     min-width: 200px;
-    max-width: 2000px;
+    max-width: 200px;
     min-height: 100vh;
 }
 #sidebar.active {

@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from userdatabase import UserDatabase
+from database import Database
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///userss.db'
@@ -20,13 +20,13 @@ def index():
 
 @app.route("/home")
 def home():
-	return("This is where your workspaces are")
+    return("This is where your workspaces are")
 
 @app.route("/sign_in", methods=["GET", "POST"])
 def sign_in():
-	if request.method == "POST":
-		return redirect('/home')
-	return render_template("accountform.html", action = "/sign_in", title = "Sign In")
+    if request.method == "POST":
+        return redirect('/home')
+    return render_template("accountform.html", action = "/sign_in", title = "Sign In")
 
 @app.route("/create_account", methods=["GET", "POST"])
 def create_account():
@@ -37,11 +37,11 @@ def create_account():
         db.create(title, review, rating)
         return redirect('/')
     else:
-	    return render_template("accountform.html", action = "/create_account", title = "Create Account")
+        return render_template("accountform.html", action = "/create_account", title = "Create Account")
 
 @app.route("/workspace")
 def workspace():
-	return render_template("workspace.html")
+    return render_template("workspace.html")
 
 @login_manager.user_loader
 def load_user(user_id):

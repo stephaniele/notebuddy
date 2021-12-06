@@ -1,66 +1,99 @@
-# class Database:
-# 	def __init__(self, app):
-# 		db = SQLAlchemy(app)
-# 		self.db = db
-# 		self.User = UserModel(db)
-# 		self.File = FileModel(db)
+from flask_sqlalchemy import SQLAlchemy
 
-# 	# def get(self, id=None):
-# 	# 	if id:
-# 	# 		return self.model.query.get(id)
-# 	# 	return self.model.query.all()
 
-# 	# def create(self, title, text, rating):
-# 	# 	review = self.model(title, text, rating)
-# 	# 	self.db.session.add(review)
-# 	# 	self.db.session.commit()
+class Database:
+    def __init__(self, app):
+        db = SQLAlchemy(app)
+        self.db = db
+        self.User = userFactory(db)
+        self.File = fileFactory(db)    
+        self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
+        self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
-# 	# def update(self, id, title, text, rating):
-# 	# 	review = self.get(id)
-# 	# 	review.title = title
-# 	# 	review.text = text
-# 	# 	review.rating = rating
-# 	# 	self.db.session.commit()
 
-# 	# def delete(self, id):
-# 	# 	review = self.get(id)
-# 	# 	self.db.session.delete(review)
-# 	# 	self.db.session.commit()
+        
+    def getUser(self, id=None):
+        if id:
+            return self.User.query.get(id)
+        return self.User.query.all()
 
-# def UserModel(db):
-# 	class User(db.Model):
-# 		__tablename__ = 'users'
-# 		id = db.Column('user_id', db.Integer, primary_key=True)
-# 		name = db.Column(db.String)
-# 		email = db.Column(db.String)
-# 		occupation = db.Column(db.String)
-# 		school = db.Column(db.String)
+    def create(self, name,email,occupation,school):
+        user = self.User(name,email,occupation,school)
+        self.db.session.add(user)
+        self.db.session.commit()
 
-# 		# one to many 
-# 		files = db.relationship('File',backref='owner', lazy='select')
+    def update(self, id, title, text, rating):
+        review = self.get(id)
+        review.title = title
+        review.text = text
+        review.rating = rating
+        self.db.session.commit()
 
-# 		def __init__(self, name, email, occupation, school):
-# 			self.name = name
-# 			self.email = email
-# 			self.occupation = occupation
-# 			self.school = school
-# 	return User
+    def delete(self, id):
+        review = self.get(id)
+        self.db.session.delete(review)
+        self.db.session.commit()
 
-# def FileModel(db):
-# 	class File(db.Model):
-# 		__tablename__ = 'files'
-# 		id = db.Column('file_id', db.Integer, primary_key=True)
-# 		name = db.Column(db.String)
-# 		occupation = db.Column(db.String)
-# 		school = db.Column(db.String)
+def userFactory(db):
+    class User(db.Model):
+        __tablename__ = 'user'
+        id = db.Column('user_id', db.Integer, primary_key=True)
+        name = db.Column(db.String)
+        email = db.Column(db.String)
+        occupation = db.Column(db.String)
+        school = db.Column(db.String)
 
-# 		# many to one
-# 		owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'),
-#         nullable=False)
+        # one to many 
+        files = db.relationship('File',backref='owner', lazy='select')
 
-# 		def __init__(self, name, email, occupation, school):
-# 			self.name = name
-# 			self.email = email
-# 			self.occupation = occupation
-# 			self.school = school
-# 	return File
+        def __init__(self, name, email, occupation, school):
+            self.name = name
+            self.email = email
+            self.occupation = occupation
+            self.school = school
+    return User
+
+def fileFactory(db):
+    class File(db.Model):
+        __tablename__ = 'file'
+        id = db.Column('file_id', db.Integer, primary_key=True)
+        name = db.Column(db.String)
+        occupation = db.Column(db.String)
+        school = db.Column(db.String)
+
+        # many to one
+        owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'),
+        nullable=False)
+
+        def __init__(self, name, email, occupation, school):
+            self.name = name
+            self.email = email
+            self.occupation = occupation
+            self.school = school
+    return File
+
+def usersOfWorkspaceFactory(db):
+    usersOfWorkspace= db.Table('usersOfWorkspace',
+        db.Column('user_id', db.Integer, db.ForeignKey('user.user_id'), primary_key=True),
+        db.Column('workspace_id', db.Integer, db.ForeignKey('workspace.workspace_id'), primary_key=True)
+    )
+    return usersOfWorkspace
+
+def workspaceFactory(db,usersOfWorkspace):
+    class Workspace(db.Model):
+        __tablename__ = 'workspace'
+        id = db.Column('workspace_id', db.Integer, primary_key=True)
+        name = db.Column(db.String)
+        startDate = db.Column(db.DateTime)
+        endDate = db.Column(db.DateTime)
+
+        # many to many
+        users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
+        backref=db.backref('workspaces', lazy=True))
+
+        def __init__(self, name, email, occupation, school):
+            self.name = name
+            self.email = email
+            self.occupation = occupation
+            self.school = school
+    return Workspace

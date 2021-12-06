@@ -17,9 +17,29 @@ class Database:
             return self.User.query.get(id)
         return self.User.query.all()
 
-    def create(self, name,email,occupation,school):
+    def getFile(self, id=None):
+        if id:
+            return self.File.query.get(id)
+        return self.File.query.all()
+
+    def getWorkspace(self, id=None):
+        if id:
+            return self.Workspace.query.get(id)
+        return self.Workspace.query.all()
+
+    def createUser(self, name,email,occupation,school):
         user = self.User(name,email,occupation,school)
         self.db.session.add(user)
+        self.db.session.commit()
+    
+    def createFile(self, name,email,occupation,school,owner_id):
+        file = self.File(name,email,occupation,school,owner_id)
+        self.db.session.add(file)
+        self.db.session.commit()
+
+    def createWorkspace(self, name,email,occupation,school,owner_id):
+        workspace = self.Workspace(name,email,occupation,school,owner_id)
+        self.db.session.add(workspace)
         self.db.session.commit()
 
     def update(self, id, title, text, rating):
@@ -65,11 +85,12 @@ def fileFactory(db):
         owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'),
         nullable=False)
 
-        def __init__(self, name, email, occupation, school):
+        def __init__(self, name, email, occupation, school,owner):
             self.name = name
             self.email = email
             self.occupation = occupation
             self.school = school
+            self.owner = owner
     return File
 
 def usersOfWorkspaceFactory(db):
@@ -87,13 +108,15 @@ def workspaceFactory(db,usersOfWorkspace):
         startDate = db.Column(db.DateTime)
         endDate = db.Column(db.DateTime)
 
+
         # many to many
-        users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
+        users = db.relationship('user', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name, email, occupation, school):
+        def __init__(self, name, email, occupation, school,owner):
             self.name = name
             self.email = email
             self.occupation = occupation
             self.school = school
+            self.owner = owner
     return Workspace

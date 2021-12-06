@@ -1,17 +1,11 @@
 import os
-from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask import Flask, flash, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 from database import Database
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///userss.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'thisissecret'
-login_manager = LoginManager()
-login_manager.init_app(app)
+app.config.from_pyfile('server.cfg')
 
-# databases
 db = Database(app)
 
 @app.route("/") 

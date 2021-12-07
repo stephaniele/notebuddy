@@ -34,7 +34,7 @@ def create_account():
         return render_template("accountform.html", action = "/create_account", title = "Create Account")
 
 @app.route("/homepage") 
-# @login_required
+@login_required
 def index():
     return render_template("homepage.html")
 

@@ -129,3 +129,4 @@ def workspaceFactory(db,usersOfWorkspace):
             self.endDate = endDate
             # self.owner = owner
     return Workspace
+

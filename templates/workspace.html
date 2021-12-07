@@ -17,21 +17,21 @@
 
 
 
-	
+    
 
 <div id="main-container">
-	<nav id="sidebar">
+    <nav id="sidebar">
         <div class="sidebar-header">
             <h3>COMP 446</h3>
         </div>
 
         <ul class="list-unstyled components">
 
-        	<li>
-        		<p id="workspace-description">
-		        	Welcome to COMP 446: Internet Computing's workspace! Share and view others' notes here.
-		        </p>
-        	</li>
+            <li>
+                <p id="workspace-description">
+                    Welcome to COMP 446: Internet Computing's workspace! Share and view others' notes here.
+                </p>
+            </li>
            
             <li>
                 <a data-toggle="modal" data-target="#exampleModal">Add file</a>
@@ -46,278 +46,278 @@
         </ul>
     </nav>
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel" >Add file</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <form id="add-file" action="/workspac">
-	        	<div style="margin-bottom: 20px">
-		        	<label for="file-picker">Upload file</label>
-		        	<input required type="file" id="file-picker"
-  					accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf">
-  				</div>
-  				<div>
-	  				<label for="file-picker">Choose date</label>
-	  				<input required type="date" id="add-date" name="add-date">
-  				</div>
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-	        <button type="submit" form="add-file" class="btn btn-primary">Submit</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel" >Add file</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="add-file" action="/workspac">
+                <div style="margin-bottom: 20px">
+                    <label for="file-picker">Upload file</label>
+                    <input required type="file" id="file-picker"
+                      accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf">
+                  </div>
+                  <div>
+                      <label for="file-picker">Choose date</label>
+                      <input required type="date" id="add-date" name="add-date">
+                  </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" form="add-file" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	<div class="container" id="days">
-		<div class="row day">
-			<h3 class="dayofWeek" data-toggle="collapse">Wednesday</h3>
-			<hr>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">flask-note</div>
-					<img class="file-img" src="/static/docs.png">
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-		</div>
-		<div class="row day">
-			<h3 class="dayofWeek" data-toggle="collapse">Monday</h3>
-			<hr>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">flask-note</div>
-					<img class="file-img" src="/static/docs.png">
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">11-17-21</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">2</span>
-				</div>
-			</div>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">comp449-flask</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">1</span>
-				</div>
-			</div>
-		</div>
-		<div class="row day">
-			<h3 class="dayofWeek" data-toggle="collapse">Friday</h3>
-			<hr>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">11-17-21</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">2</span>
-				</div>
-			</div>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">comp449-flask</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">1</span>
-				</div>
-			</div>
-		</div>
-		<div class="row day">
-			<h3 class="dayofWeek" data-toggle="collapse">Wednesday</h3>
-			<hr>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">flask-note</div>
-					<img class="file-img" src="/static/docs.png">
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">Flask</div>
-					<img class="file-img" src="/static/pdf.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">5</span>
-				</div>
-			</div>
-			<div class=" col file-container">
-				<div class="file">
-					<div class="file-name">11-17-21</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">2</span>
-				</div>
-			</div>
-			<div class="col file-container">
-				<div class="file">
-					<div class="file-name">comp449-flask</div>
-					<img class="file-img" src="/static/docs.png">
-					
-				</div>
-				<div class="img-info">
-					<img class="file-profile-pic" src="/static/person.jpg">
-					<img class="heart" src="/static/heart.png">
-					<span class="likes">1</span>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+    <div class="container" id="days">
+        <div class="row day">
+            <h3 class="dayofWeek" data-toggle="collapse">Wednesday</h3>
+            <hr>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">flask-note</div>
+                    <img class="file-img" src="/static/docs.png">
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+        </div>
+        <div class="row day">
+            <h3 class="dayofWeek" data-toggle="collapse">Monday</h3>
+            <hr>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">flask-note</div>
+                    <img class="file-img" src="/static/docs.png">
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">11-17-21</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">2</span>
+                </div>
+            </div>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">comp449-flask</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">1</span>
+                </div>
+            </div>
+        </div>
+        <div class="row day">
+            <h3 class="dayofWeek" data-toggle="collapse">Friday</h3>
+            <hr>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">11-17-21</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">2</span>
+                </div>
+            </div>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">comp449-flask</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">1</span>
+                </div>
+            </div>
+        </div>
+        <div class="row day">
+            <h3 class="dayofWeek" data-toggle="collapse">Wednesday</h3>
+            <hr>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">flask-note</div>
+                    <img class="file-img" src="/static/docs.png">
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">Flask</div>
+                    <img class="file-img" src="/static/pdf.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">5</span>
+                </div>
+            </div>
+            <div class=" col file-container">
+                <div class="file">
+                    <div class="file-name">11-17-21</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">2</span>
+                </div>
+            </div>
+            <div class="col file-container">
+                <div class="file">
+                    <div class="file-name">comp449-flask</div>
+                    <img class="file-img" src="/static/docs.png">
+                    
+                </div>
+                <div class="img-info">
+                    <img class="file-profile-pic" src="/static/person.jpg">
+                    <img class="heart" src="/static/heart.png">
+                    <span class="likes">1</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
-	<!-- <div id="side-bar">
-		<ul>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+    <!-- <div id="side-bar">
+        <ul>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
 
-		</ul>
-	</div> -->
+        </ul>
+    </div> -->
 
-<!-- 	<div id="invite">
-		<input type="button" id="invite-button" value="Invite">
-	</div> -->
-	<!-- <img src="/static/add.png" id ="add-button" data-toggle="modal" data-target="#exampleModal" onclick="DoSomething();"/> -->
+<!--     <div id="invite">
+        <input type="button" id="invite-button" value="Invite">
+    </div> -->
+    <!-- <img src="/static/add.png" id ="add-button" data-toggle="modal" data-target="#exampleModal" onclick="DoSomething();"/> -->
 </div>
 
 <script type="text/javascript">
 
-	// $(".dayofWeek").click(function(){
-	// 	$(this).attr("data-target",$(this).closest(".day").children(".file-container"))
-	// })
+    // $(".dayofWeek").click(function(){
+    //     $(this).attr("data-target",$(this).closest(".day").children(".file-container"))
+    // })
 
-	// $(".dayofWeek").attr("data-target",".file-container")
+    // $(".dayofWeek").attr("data-target",".file-container")
 
-	
+    
 </script>
 
 

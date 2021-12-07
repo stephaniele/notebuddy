@@ -9,15 +9,15 @@ db.db.drop_all()
 # Create the tables
 db.db.create_all()
 # Create a test entry which works somewhat
-if (len(db.User.get()) == 0):
-    db.User.create("Qingru","qzhang1@macalester.edu","Student","Macalester College")
-    db.User.create("Carrie","qzhang1@macalester.edu","Student","Macalester College")
+if (len(db.User.getAll()) == 0):
+    db.User.create("Qingru","qzhang1@macalester.edu","Student","Macalester College","000")
+    db.User.create("Carrie","qzhang1@macalester.edu","Student","Macalester College","000")
 
 print('Database reset: success!')
 
 # Create user
-user1 = db.User.get()[0]
-user2 = db.User.get()[1]
+user1 = db.User.getAll()[0]
+user2 = db.User.getAll()[1]
 
 # Update user info
 user1.updateName("Stephanie")

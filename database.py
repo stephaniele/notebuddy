@@ -10,6 +10,17 @@ class Database:
         self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
         self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
+    def addUserToWorkspace(self,user_id,workspace_id):
+        workspace = self.Workspace.get(workspace_id)
+        user = self.User.getById(user_id)
+        workspace.users.append(user)
+        self.db.session.commit()
+
+    def delete(self, id):
+        review = self.get(id)
+        self.db.session.delete(review)
+        self.db.session.commit()
+
 def userFactory(db):
     class User(db.Model, UserMixin):
         __tablename__ = 'user'
@@ -28,7 +39,7 @@ def userFactory(db):
             self.occupation = occupation
             self.school = school
 
-        def getAllUsers():
+        def getAll():
             return User.query.all()
     
         def getById(id):
@@ -69,7 +80,10 @@ def fileFactory(db):
         workspace_owner_id = db.Column(db.Integer, db.ForeignKey('workspace.workspace_id'),
         nullable=False)
 
-        def __init__(self, name,file_path,file_type,owner,workspace_owner):
+        # many to one
+        workspace_owner_id = db.Column(db.Integer, db.ForeignKey('workspace.workspace_id'), nullable=False)
+
+        def __init__(self, name, file_path,file_type,owner,workspace_owner):
             self.name = name
             self.file_path=file_path
             self.file_type=file_type
@@ -96,9 +110,7 @@ def fileFactory(db):
     return File
 
 def usersOfWorkspaceFactory(db):
-    usersOfWorkspace= db.Table('usersOfWorkspace',
-        db.Column('user_id', db.Integer, db.ForeignKey('user.user_id'), primary_key=True),
-        db.Column('workspace_id', db.Integer, db.ForeignKey('workspace.workspace_id'), primary_key=True))
+    usersOfWorkspace= db.Table('usersOfWorkspace', db.Column('user_id', db.Integer, db.ForeignKey('user.user_id'), primary_key=True), db.Column('workspace_id', db.Integer, db.ForeignKey('workspace.workspace_id'), primary_key=True))
     return usersOfWorkspace
 
 def workspaceFactory(db,usersOfWorkspace):
@@ -116,7 +128,7 @@ def workspaceFactory(db,usersOfWorkspace):
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name,startDate,endDate):
+        def __init__(self, name, startDate,endDate):
             self.name = name
             self.startDate = startDate
             self.endDate = endDate

@@ -17,27 +17,27 @@
 
 
 
-	
+    
 
 <div id="main-container">
-	<nav id="sidebar">
+    <nav id="sidebar">
         <div class="sidebar-header">
             <h3>COMP 446</h3>
         </div>
 
         <ul class="list-unstyled components">
 
-        	<li>
-        		<p id="workspace-description">
-		        	Welcome to COMP 446: Internet Computing's workspace! Share and view others' notes here.
-		        </p>
-        	</li>
+            <li>
+                <p id="workspace-description">
+                    Welcome to COMP 446: Internet Computing's workspace! Share and view others' notes here.
+                </p>
+            </li>
            
             <li>
-                <a data-toggle="modal" data-target="#exampleModal">Add file</a>
+                <a data-toggle="modal" data-target="#addModal">Add file</a>
             </li>
             <li>
-                <a href="#">Invite members</a>
+                <a data-toggle="modal" data-target="#inviteModal">Invite members</a>
             </li>
             <li>
                 <a href="/">Back</a>
@@ -46,12 +46,12 @@
         </ul>
     </nav>
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- Add File Modal -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel" >Add file</h5>
+	        <h5 class="modal-title" id="addModalTitle" >Add file</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -68,6 +68,28 @@
 	  				<input required type="date" id="add-date" name="add-date">
   				</div>
 	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	        <button type="submit" form="add-file" class="btn btn-primary">Submit</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Invite Link Modal -->
+	<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="inviteModalTitle">Share this link</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<p> Imagine this is a link<p>
+	      	<button onclick="copyToClipboard()">Copy text</button>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -286,38 +308,39 @@
 		
 	</div>
 
-	<!-- <div id="side-bar">
-		<ul>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
-			<li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
 
-		</ul>
-	</div> -->
+    <!-- <div id="side-bar">
+        <ul>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
+            <li><img class="side-profile-pic" src="/static/person.jpg" alt="profile pic"></li>
 
-<!-- 	<div id="invite">
-		<input type="button" id="invite-button" value="Invite">
-	</div> -->
-	<!-- <img src="/static/add.png" id ="add-button" data-toggle="modal" data-target="#exampleModal" onclick="DoSomething();"/> -->
+        </ul>
+    </div> -->
+
+<!--     <div id="invite">
+        <input type="button" id="invite-button" value="Invite">
+    </div> -->
+    <!-- <img src="/static/add.png" id ="add-button" data-toggle="modal" data-target="#exampleModal" onclick="DoSomething();"/> -->
 </div>
 
 <script type="text/javascript">
 
-	// $(".dayofWeek").click(function(){
-	// 	$(this).attr("data-target",$(this).closest(".day").children(".file-container"))
-	// })
+    // $(".dayofWeek").click(function(){
+    //     $(this).attr("data-target",$(this).closest(".day").children(".file-container"))
+    // })
 
-	// $(".dayofWeek").attr("data-target",".file-container")
+    // $(".dayofWeek").attr("data-target",".file-container")
 
-	
+    
 </script>
 
 

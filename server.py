@@ -15,7 +15,11 @@ login_manager.init_app(app)
 def sign_in():
     if request.method == "POST":
         email=request.form["email"]
+<<<<<<< HEAD
         user = db.User.getByEmail(email)
+=======
+        user = db.getUserByEmail(email)
+>>>>>>> 4e9847e (commit some change)
         login_user(user)
         return redirect('/homepage')
     return render_template("accountform.html", action = "/sign_in", title = "Sign In")
@@ -28,13 +32,17 @@ def create_account():
         school=request.form["school"]
         occupation=request.form["occupation"]
         password=request.form["password"]
+<<<<<<< HEAD
         db.User.create(username, email, password, school, occupation)
+=======
+        db.createUser(username, email, password, school, occupation)
+>>>>>>> 4e9847e (commit some change)
         return redirect('/homepage')
     else:
         return render_template("accountform.html", action = "/create_account", title = "Create Account")
 
 @app.route("/homepage") 
-# @login_required
+@login_required
 def index():
     return render_template("homepage.html")
 

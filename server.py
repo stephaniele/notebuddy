@@ -15,7 +15,7 @@ login_manager.init_app(app)
 def sign_in():
     if request.method == "POST":
         email=request.form["email"]
-        user = userFactory.User.query.filter_by(email=email).first()
+        user = db.User.query.filter_by(email=email).first()
         login_user(user)
         return redirect('/homepage')
     return render_template("accountform.html", action = "/sign_in", title = "Sign In")

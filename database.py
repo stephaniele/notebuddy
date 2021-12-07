@@ -10,42 +10,14 @@ class Database:
         self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
         self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
-
-        
     def getUser(self, id=None):
         if id:
             return self.User.query.get(id)
         return self.User.query.all()
 
-    def getFile(self, id=None):
-        if id:
-            return self.File.query.get(id)
-        return self.File.query.all()
-
-    def getWorkspace(self, id=None):
-        if id:
-            return self.Workspace.query.get(id)
-        return self.Workspace.query.all()
-
-    def createUser(self, name,email,occupation,school):
-        user = self.User(name,email,occupation,school)
+    def createUser(self, name, email, password):
+        user = self.User(name, email, password)
         self.db.session.add(user)
-        self.db.session.commit()
-    
-    def createFile(self, name,file_path,file_type,owner,workspace_owner):
-        file = self.File(name,file_path,file_type,owner,workspace_owner)
-        self.db.session.add(file)
-        self.db.session.commit()
-
-    def createWorkspace(self, name,startDate,endDate):
-        workspace = self.Workspace(name,startDate,endDate)
-        self.db.session.add(workspace)
-        self.db.session.commit()
-
-    def addUserToWorkspace(self,user_id,workspace_id):
-        workspace = self.getWorkspace(workspace_id)
-        user = self.getUser(user_id)
-        workspace.users.append(user)
         self.db.session.commit()
 
     def update(self, id, title, text, rating):
@@ -66,17 +38,15 @@ def userFactory(db):
         id = db.Column('user_id', db.Integer, primary_key=True)
         name = db.Column(db.String)
         email = db.Column(db.String)
-        occupation = db.Column(db.String)
-        school = db.Column(db.String)
+        password = db.Column(db.String)
 
         # one to many 
-        files = db.relationship('File',backref='owner', lazy='select')
+        files = db.relationship('File', backref='owner', lazy='select')
 
-        def __init__(self, name, email, occupation, school):
+        def __init__(self, username, email, password):
             self.name = name
             self.email = email
-            self.occupation = occupation
-            self.school = school
+            self.password = password
     return User
 
 def fileFactory(db):
@@ -84,21 +54,18 @@ def fileFactory(db):
         __tablename__ = 'file'
         id = db.Column('file_id', db.Integer, primary_key=True)
         name = db.Column(db.String)
-        file_path = db.Column(db.String)
-        file_type = db.Column(db.String)
+        occupation = db.Column(db.String)
+        school = db.Column(db.String)
 
         # many to one
         owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'),
         nullable=False)
-        workspace_owner_id = db.Column(db.Integer, db.ForeignKey('workspace.workspace_id'),
-        nullable=False)
 
-        def __init__(self, name,file_path,file_type,owner,workspace_owner):
+        def __init__(self, name, email, occupation, school):
             self.name = name
-            self.file_path=file_path
-            self.file_type=file_type
-            self.owner = owner
-            self.workspace_owner = workspace_owner
+            self.email = email
+            self.occupation = occupation
+            self.school = school
     return File
 
 def usersOfWorkspaceFactory(db):
@@ -116,17 +83,13 @@ def workspaceFactory(db,usersOfWorkspace):
         startDate = db.Column(db.DateTime)
         endDate = db.Column(db.DateTime)
 
-        # one to many
-        files = db.relationship('File',backref='workspace_owner', lazy='select')
-
         # many to many
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name,startDate,endDate):
+        def __init__(self, name, email, occupation, school):
             self.name = name
-            self.startDate = startDate
-            self.endDate = endDate
-            # self.owner = owner
+            self.email = email
+            self.occupation = occupation
+            self.school = school
     return Workspace
-

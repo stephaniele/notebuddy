@@ -10,61 +10,6 @@ class Database:
         self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
         self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
-<<<<<<< HEAD
-=======
-
-    def getAllUsers(self):
-        return self.User.query.all()
-    
-    def getUserId(self, id):
-        return self.User.query.get(id)
-    
-    def getUserByEmail(self, email):
-        return self.User.query.filter_by(email=email).first()
-
-    def getFile(self, id=None):
-        if id:
-            return self.File.query.get(id)
-        return self.File.query.all()
-
-    def getWorkspace(self, id=None):
-        if id:
-            return self.Workspace.query.get(id)
-        return self.Workspace.query.all()
-
-    def createUser(self, name,email,occupation,school,password):
-        user = self.User(name,email,occupation,school,password)
-        self.db.session.add(user)
-        self.db.session.commit()
-    
-    def createFile(self, name,file_path,file_type,owner,workspace_owner):
-        file = self.File(name,file_path,file_type,owner,workspace_owner)
-        self.db.session.add(file)
-        self.db.session.commit()
-
-    def createWorkspace(self, name,startDate,endDate):
-        workspace = self.Workspace(name,startDate,endDate)
-        self.db.session.add(workspace)
-        self.db.session.commit()
-
-    def addUserToWorkspace(self,user_id,workspace_id):
-        workspace = self.getWorkspace(workspace_id)
-        user = self.getUser(user_id)
-        workspace.users.append(user)
-        self.db.session.commit()
->>>>>>> 4e9847e (commit some change)
-
-    def addUserToWorkspace(self,user_id,workspace_id):
-        workspace = self.Workspace.get(workspace_id)
-        user = self.User.get(user_id)
-        workspace.users.append(user)
-        self.db.session.commit()
-
-    def delete(self, id):
-        review = self.get(id)
-        self.db.session.delete(review)
-        self.db.session.commit()
-
 def userFactory(db):
     class User(db.Model, UserMixin):
         __tablename__ = 'user'
@@ -82,19 +27,18 @@ def userFactory(db):
             self.email = email
             self.occupation = occupation
             self.school = school
-<<<<<<< HEAD
 
-        def getAllUsers(self):
+        def getAllUsers():
             return User.query.all()
     
-        def getById(self, id):
+        def getById(id):
             return User.query.get(id)
     
-        def getByEmail(self, email):
+        def getByEmail(email):
             return User.query.filter_by(email=email).first()
 
-        def create(name,email,occupation,school):
-        	user = User(name,email,occupation,school)
+        def create(name,email,occupation,school,password):
+        	user = User(name,email,occupation,school,password)
         	db.session.add(user)
         	db.session.commit()
 
@@ -109,9 +53,6 @@ def userFactory(db):
         def updateSchool(self, school):
         	self.email = email
         	db.session.commit()
-=======
-            self.password = password
->>>>>>> 4e9847e (commit some change)
     return User
 
 def fileFactory(db):
@@ -134,7 +75,6 @@ def fileFactory(db):
             self.file_type=file_type
             self.owner = owner
             self.workspace_owner = workspace_owner
-<<<<<<< HEAD
 
         def get(id=None):
         	if id:
@@ -153,14 +93,12 @@ def fileFactory(db):
         def updateName(self,name):
 	        self.name = name
 	        db.session.commit()
-=======
->>>>>>> 4e9847e (commit some change)
     return File
 
 def usersOfWorkspaceFactory(db):
     usersOfWorkspace= db.Table('usersOfWorkspace',
         db.Column('user_id', db.Integer, db.ForeignKey('user.user_id'), primary_key=True),
-        db.Column('workspace_id', db.Integer, db.ForeignKey('workspace.workspace_id'), primary_key=True)
+        db.Column('workspace_id', db.Integer, db.ForeignKey('workspace.workspace_id'), primary_key=True))
     return usersOfWorkspace
 
 def workspaceFactory(db,usersOfWorkspace):
@@ -174,10 +112,6 @@ def workspaceFactory(db,usersOfWorkspace):
 
         # one to many
         files = db.relationship('File',backref='workspace_owner', lazy='select')
-<<<<<<< HEAD
-=======
-
->>>>>>> 4e9847e (commit some change)
         # many to many
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
@@ -187,7 +121,6 @@ def workspaceFactory(db,usersOfWorkspace):
             self.startDate = startDate
             self.endDate = endDate
             # self.owner = owner
-<<<<<<< HEAD
 
         def get(id=None):
         	if id:
@@ -203,6 +136,3 @@ def workspaceFactory(db,usersOfWorkspace):
         	self.description = description
         	db.session.commit()
     return Workspace
-=======
-    return Workspace
->>>>>>> 4e9847e (commit some change)

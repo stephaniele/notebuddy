@@ -19,7 +19,11 @@ user1 = db.getUser()[0]
 user2 = db.getUser()[1]
 
 db.createWorkspace("a",x,x)
+db.createWorkspace("b",x,x)
+
 workspace1 = db.getWorkspace()[0]
+workspace2 = db.getWorkspace()[1]
+
 
 db.createFile("a","b","c",user1,workspace1)
 db.createFile("12","13","14",user1,workspace1)
@@ -28,6 +32,7 @@ file1 = db.getFile()[0]
 file2 = db.getFile()[1]
 
 db.addUserToWorkspace(1,1)
+db.addUserToWorkspace(1,2)
 db.addUserToWorkspace(2,1)
 
 print(file1.owner)

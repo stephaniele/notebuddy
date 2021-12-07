@@ -15,7 +15,7 @@ login_manager.init_app(app)
 def sign_in():
     if request.method == "POST":
         email=request.form["email"]
-        user = db.User.query.filter_by(email=email).first()
+        user = db.User.getByEmail(email)
         login_user(user)
         return redirect('/homepage')
     return render_template("accountform.html", action = "/sign_in", title = "Sign In")
@@ -25,8 +25,10 @@ def create_account():
     if request.method == "POST":
         username=request.form["username"]
         email=request.form["email"]
+        school=request.form["school"]
+        occupation=request.form["occupation"]
         password=request.form["password"]
-        db.createUser(username, email, password)
+        db.User.create(username, email, password, school, occupation)
         return redirect('/homepage')
     else:
         return render_template("accountform.html", action = "/create_account", title = "Create Account")
@@ -43,7 +45,7 @@ def workspace():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return userFactory.query.get(int(user_id))
+    return db.User.getById(user_id)
 
 if __name__ == '__main__':
     app.run(debug=True)

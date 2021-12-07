@@ -9,27 +9,44 @@ db.db.drop_all()
 # Create the tables
 db.db.create_all()
 # Create a test entry which works somewhat
-if (len(db.getUser()) == 0):
-    db.createUser("Qingru","qzhang1@macalester.edu","Student","Macalester College")
-    db.createUser("Carrie","qzhang1@macalester.edu","Student","Macalester College")
+if (len(db.User.getAll()) == 0):
+    db.User.create("Qingru","qzhang1@macalester.edu","Student","Macalester College","000")
+    db.User.create("Carrie","qzhang1@macalester.edu","Student","Macalester College","000")
 
 print('Database reset: success!')
 
-user1 = db.getUser()[0]
-user2 = db.getUser()[1]
+# Create user
+user1 = db.User.getAll()[0]
+user2 = db.User.getAll()[1]
 
-db.createWorkspace("a",x,x)
-db.createWorkspace("b",x,x)
+# Update user info
+user1.updateName("Stephanie")
+# print(user1.name)
+# print(user1.email)
 
-workspace1 = db.getWorkspace()[0]
-workspace2 = db.getWorkspace()[1]
+# Create workspace
+db.Workspace.create("a",x,x)
+workspace1 = db.Workspace.get()[0]
+
+# Update workspace info
+workspace1.updateDescription("Welcome to our workspace")
+print(workspace1.description)
+
+# Create file
+db.File.create("a","b","c",user1,workspace1)
+db.File.create("12","13","14",user1,workspace1)
+
+# Get file
+file1 = db.File.get()[0]
+file2 = db.File.get()[1]
 
 
-db.createFile("a","b","c",user1,workspace1)
-db.createFile("12","13","14",user1,workspace1)
+# Update file info
+print(file1.name)
+file1.updateName("comp446-note")
+print(file1.name)
 
-file1 = db.getFile()[0]
-file2 = db.getFile()[1]
+# Add user to workspace
 
 db.addUserToWorkspace(1,1)
 db.addUserToWorkspace(1,2)

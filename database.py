@@ -10,11 +10,14 @@ class Database:
         self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
         self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
-    def addUserToWorkspace(self,user_id,workspace_id):
-        workspace = self.Workspace.get(workspace_id)
-        user = self.User.getById(user_id)
+    def addUserToWorkspace(self,user,workspace):
         workspace.users.append(user)
         self.db.session.commit()
+
+    def deleteUserFromWorkspace(self,user,workspace):
+        workspace.users.remove(user)
+        self.db.session.commit()
+
 
     def delete(self, id):
         review = self.get(id)
@@ -49,21 +52,25 @@ def userFactory(db):
             return User.query.filter_by(email=email).first()
 
         def create(name,email,occupation,school,password):
-        	user = User(name,email,occupation,school,password)
-        	db.session.add(user)
-        	db.session.commit()
+            user = User(name,email,occupation,school,password)
+            db.session.add(user)
+            db.session.commit()
 
         def updateName(self,name):
-        	self.name = name
-        	db.session.commit()
+            self.name = name
+            db.session.commit()
 
         def updateEmail(self,email):
-        	self.email = email
-        	db.session.commit()
+            self.email = email
+            db.session.commit()
 
         def updateSchool(self, school):
-        	self.email = email
-        	db.session.commit()
+            self.school = school
+            db.session.commit()
+
+        def updateOccupation(self, occupation):
+            self.occupation = occupation
+            db.session.commit()
     return User
 
 def fileFactory(db):
@@ -91,22 +98,22 @@ def fileFactory(db):
             self.workspace_owner = workspace_owner
 
         def get(id=None):
-        	if id:
-        		return File.query.get(id)
-        	return File.query.all()
+            if id:
+                return File.query.get(id)
+            return File.query.all()
 
-       	def create(name,file_path,file_type,owner,workspace_owner):
-       		file = File(name,file_path,file_type,owner,workspace_owner)
-       		db.session.add(file)
-       		db.session.commit()
+        def create(name,file_path,file_type,owner,workspace_owner):
+               file = File(name,file_path,file_type,owner,workspace_owner)
+               db.session.add(file)
+               db.session.commit()
 
-       	def updatePath(self,path):
-       		self.file_path=path
-       		db.session.commit()
+        def updatePath(self,path):
+               self.file_path=path
+               db.session.commit()
 
         def updateName(self,name):
-	        self.name = name
-	        db.session.commit()
+            self.name = name
+            db.session.commit()
     return File
 
 def usersOfWorkspaceFactory(db):
@@ -121,6 +128,8 @@ def workspaceFactory(db,usersOfWorkspace):
         description = db.Column(db.String)
         startDate = db.Column(db.DateTime)
         endDate = db.Column(db.DateTime)
+        dayOfWeek = db.Column(db.String)
+        secretCode = db.Column(db.String)
 
         # one to many
         files = db.relationship('File',backref='workspace_owner', lazy='select')
@@ -128,23 +137,29 @@ def workspaceFactory(db,usersOfWorkspace):
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name, startDate,endDate):
+        def __init__(self, name, description, startDate,endDate,dayOfWeek,secretCode):
             self.name = name
+            self.description = description
             self.startDate = startDate
             self.endDate = endDate
-            # self.owner = owner
+            self.dayOfWeek = dayOfWeek
+            self.secretCode = secretCode
 
         def get(id=None):
-        	if id:
-        		return Workspace.query.get(id)
-        	return Workspace.query.all()
+            if id:
+                return Workspace.query.get(id)
+            return Workspace.query.all()
 
-        def create(name,startDate,endDate):
-        	workspace = Workspace(name,startDate,endDate)
-        	db.session.add(workspace)
-        	db.session.commit()
+        def getBySecretCode(inputSecretCode):
+            return Workspace.query.filter_by(secretCode=inputSecretCode)
+
+        def create(name,description,startDate,endDate,dayOfWeek,secretCode):
+            workspace = Workspace(name,description,startDate,endDate,dayOfWeek,secretCode)
+            db.session.add(workspace)
+            db.session.commit()
+            return workspace
 
         def updateDescription(self,description):
-        	self.description = description
-        	db.session.commit()
+            self.description = description
+            db.session.commit()
     return Workspace

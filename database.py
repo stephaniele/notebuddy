@@ -14,6 +14,11 @@ class Database:
         workspace.users.append(user)
         self.db.session.commit()
 
+    def deleteUserFromWorkspace(self,user,workspace):
+        workspace.users.remove(user)
+        self.db.session.commit()
+
+
     def delete(self, id):
         review = self.get(id)
         self.db.session.delete(review)
@@ -124,6 +129,7 @@ def workspaceFactory(db,usersOfWorkspace):
         startDate = db.Column(db.DateTime)
         endDate = db.Column(db.DateTime)
         dayOfWeek = db.Column(db.String)
+        secretCode = db.Column(db.String)
 
         # one to many
         files = db.relationship('File',backref='workspace_owner', lazy='select')
@@ -131,21 +137,24 @@ def workspaceFactory(db,usersOfWorkspace):
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name, description, startDate,endDate,dayOfWeek):
+        def __init__(self, name, description, startDate,endDate,dayOfWeek,secretCode):
             self.name = name
             self.description = description
             self.startDate = startDate
             self.endDate = endDate
             self.dayOfWeek = dayOfWeek
-            
+            self.secretCode = secretCode
 
         def get(id=None):
             if id:
                 return Workspace.query.get(id)
             return Workspace.query.all()
 
-        def create(name,description,startDate,endDate,dayOfWeek):
-            workspace = Workspace(name,description,startDate,endDate,dayOfWeek)
+        def getBySecretCode(inputSecretCode):
+            return Workspace.query.filter_by(secretCode=inputSecretCode)
+
+        def create(name,description,startDate,endDate,dayOfWeek,secretCode):
+            workspace = Workspace(name,description,startDate,endDate,dayOfWeek,secretCode)
             db.session.add(workspace)
             db.session.commit()
             return workspace

@@ -4,6 +4,8 @@ from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from datetime import datetime
+import random
+import string
 
 app = Flask(__name__)
 app.config.from_pyfile('server.cfg')
@@ -66,6 +68,13 @@ def edit_profile():
             current_user.updateOccupation(occupation)
     return redirect("/homepage")
 
+@app.route('/quit_workspace/<id>',methods=["POST","GET"])
+@login_required
+def quit_workspace(id):
+    workspace = db.Workspace.get(id)
+    db.deleteUserFromWorkspace(current_user,workspace)
+    return redirect("/homepage")
+
 @app.route('/create_workspace',methods=["POST","GET"])
 @login_required
 def create_workspace():
@@ -106,7 +115,10 @@ def create_workspace():
             flash("Sorry, you didn't successfully create a new workspace. It seems that you didn't select any days of the week.")
             return redirect("/homepage")
         
-        workspace = db.Workspace.create(name,description,datetime_start_date,datetime_end_date,days_of_week_str)
+        letters = string.ascii_lowercase
+        secretCode = ''.join(random.choice(letters) for i in range(10)) + name
+
+        workspace = db.Workspace.create(name,description,datetime_start_date,datetime_end_date,days_of_week_str,secretCode)
         
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")

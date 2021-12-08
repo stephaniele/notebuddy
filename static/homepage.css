@@ -109,3 +109,12 @@ a, a:hover, a:focus {
     margin-left: 16%;
     padding-left: 2%;
 }
+
+.card {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#alert-btn {
+    margin-left: 20%;
+}

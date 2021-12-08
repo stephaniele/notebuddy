@@ -10,9 +10,7 @@ class Database:
         self.UsersOfWorkspace = usersOfWorkspaceFactory(db)
         self.Workspace = workspaceFactory(db,self.UsersOfWorkspace)
 
-    def addUserToWorkspace(self,user_id,workspace_id):
-        workspace = self.Workspace.get(workspace_id)
-        user = self.User.getById(user_id)
+    def addUserToWorkspace(self,user,workspace):
         workspace.users.append(user)
         self.db.session.commit()
 
@@ -63,6 +61,10 @@ def userFactory(db):
 
         def updateSchool(self, school):
             self.school = school
+            db.session.commit()
+
+        def updateOccupation(self, occupation):
+            self.occupation = occupation
             db.session.commit()
     return User
 
@@ -121,6 +123,7 @@ def workspaceFactory(db,usersOfWorkspace):
         description = db.Column(db.String)
         startDate = db.Column(db.DateTime)
         endDate = db.Column(db.DateTime)
+        dayOfWeek = db.Column(db.String)
 
         # one to many
         files = db.relationship('File',backref='workspace_owner', lazy='select')
@@ -128,21 +131,24 @@ def workspaceFactory(db,usersOfWorkspace):
         users = db.relationship('User', secondary=usersOfWorkspace, lazy='subquery',
         backref=db.backref('workspaces', lazy=True))
 
-        def __init__(self, name, startDate,endDate):
+        def __init__(self, name, description, startDate,endDate,dayOfWeek):
             self.name = name
+            self.description = description
             self.startDate = startDate
             self.endDate = endDate
-            # self.owner = owner
+            self.dayOfWeek = dayOfWeek
+            
 
         def get(id=None):
             if id:
                 return Workspace.query.get(id)
             return Workspace.query.all()
 
-        def create(name,startDate,endDate):
-            workspace = Workspace(name,startDate,endDate)
+        def create(name,description,startDate,endDate,dayOfWeek):
+            workspace = Workspace(name,description,startDate,endDate,dayOfWeek)
             db.session.add(workspace)
             db.session.commit()
+            return workspace
 
         def updateDescription(self,description):
             self.description = description

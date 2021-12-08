@@ -14,7 +14,20 @@
     <title>Welcome to notebuddy</title>
   </head>
 
+
   <body>
+    
+  <div class="container">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+          {{ message }}
+          <button type="button" id = "alert-btn" class="btn btn-secondary" data-bs-dismiss="alert">Close</button>
+      </div>
+      {% endfor %}
+
+      {% block page_content %}{% endblock %}
+  </div>
+
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
@@ -23,8 +36,8 @@
             </div>
     
             <ul class="list-unstyled components">
-                <h4 >Qingru Zhang</h4>
-                <h6> Macalester College </h6>
+                <h4 >{{current_user.name}}</h4>
+                <h6> {{current_user.school}} </h6>
                 <li>
                   <a  data-bs-toggle="modal" data-bs-target="#ProfileModal">
                     Edit Profile Information
@@ -42,7 +55,7 @@
                 </li>
                 
                 <li>
-                    <a href="/sign_in">Sign Out</a>
+                    <a href="/logout">Sign Out</a>
                 </li>
             </ul>
         </nav>
@@ -58,18 +71,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form action="/edit_profile" method="POST">
                   <div class="mb-3">
-                    <label for="exampleInputName1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputName1">
+                    <label for="exampleInputName1" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="exampleInputName1" name="username" placeholder="{{current_user.name}}">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputName2" class="form-label">School Name</label>
-                    <input type="text" class="form-control" id="exampleInputName2">
+                    <label for="exampleInputName3" class="form-label">Occupation</label>
+                    <input type="text" class="form-control" id="exampleInputName3" name="occupation" placeholder="{{current_user.occupation}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName2" class="form-label">School</label>
+                    <input type="text" class="form-control" id="exampleInputName2" name="school" placeholder="{{current_user.school}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail" class="form-label">Email</label>
-                    <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="qzhang1@macalester.edu">
+                    <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="{{current_user.email}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputPassword" class="form-label">Password</label>
@@ -93,22 +110,45 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form   action = "/create_workspace" method = "POST">
                   <div class="mb-3">
-                    <label for="exampleInputName1" class="form-label">Workspace Name</label>
-                    <input type="text" class="form-control" id="exampleInputName1">
+                    <label for="InputName" class="form-label">Workspace Name</label>
+                    <input type="text" class="form-control" id="InputName" name="workspace_name" required>
                   </div>
                   <div class="mb-3">
-                    <label for="date-picker-example" class="form-label">Start Date</label>
-                    <input placeholder="Selected date" type="date" id="date-picker-example" class="form-control datepicker">
+                    <label for="InputDescription" class="form-label">Workspace Description</label>
+                    <textarea type="text" class="form-control" id="InputDescription" name="workspace_description" maxlength="200" > </textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputName2" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="exampleInputName2">
+                    <label for="date-picker-example1" class="form-label">Start Date</label>
+                    <input  placeholder="Selected date" type="date" id="date-picker-example1" class="form-control datepicker" name = "start_date" required>
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputName2" class="form-label">Days of Week</label>
-                    <input type="text" class="form-control" id="exampleInputName2">
+                    <label for="date-picker-example2" class="form-label">End Date</label>
+                    <input  type="date" class="form-control" id="date-picker-example2" name = "end_date" required>
+                  </div>
+                  <div class="mb-3">
+                    <label>Days Of Week:</label>
+                    <div>
+                      <input type="checkbox" id="Monday" name="Monday">
+                      <label for="Monday">Monday</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="Tuesday" name="Tuesday">
+                      <label for="Tuesday">Tuesday</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="Wednesday" name="Wednesday">
+                      <label for="Wednesday">Wednesday</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="Thursday" name="Thursday">
+                      <label for="Thursday">Thursday</label>
+                    </div>
+                    <div>
+                      <input type="checkbox" id="Friday" name="Friday">
+                      <label for="Friday">Friday</label>
+                    </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -148,132 +188,34 @@
         <div id="content">
             <div class="container mt-4">
                 <div class="row  justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-4 home-title">
                         <h1>Your Workspaces</h1>
                     </div>
                 </div>
             </div>
            
+            
             <div class="album py-5">
-                
-                <div class="container">
-            
-                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-3">
-
-                    <div class="col-md-4">
-                      <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-            
-                        <div class="card-body">
-                          <p class="card-text">Workspace Name</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                              <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                              <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                            </div>
+              <div class="container">
+          
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-3">
+                  {% for workspace in workspaces %}
+                  <div class="col-md-4">
+                    <div class="card ">                        
+                      <div class="card-body">
+                        <p class="card-text">{{workspace.name}}</p>
+                        <p class="card-text">{{workspace.description}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                            <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
                           </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  {% endfor %}
 
-                    <div class="col-md-4">
-                      <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-            
-                        <div class="card-body">
-                          <p class="card-text">Workspace Name</p>
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                              <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                              <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                          <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-              
-                          <div class="card-body">
-                            <p class="card-text">Workspace Name</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="card shadow-sm">
-                          <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-              
-                          <div class="card-body">
-                            <p class="card-text">Workspace Name</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="card shadow-sm">
-                          <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-              
-                          <div class="card-body">
-                            <p class="card-text">Workspace Name</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="card shadow-sm">
-                          <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-              
-                          <div class="card-body">
-                            <p class="card-text">Workspace Name</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="card shadow-sm">
-                          <svg class="bd-placeholder-img card-img-top" width="100%" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Workspace Image</text></svg>
-              
-                          <div class="card-body">
-                            <p class="card-text">Workspace Name</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                              <div class="btn-group">
-                                <a href="/workspace" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-
-                      
                   </div>
                 </div>
               </div>
@@ -285,8 +227,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-      $('.datepicker').pickadate();
-    </script>
+    
   </body>
 </html>

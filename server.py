@@ -3,16 +3,23 @@ from flask import Flask, flash, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 import string
+
+
 
 app = Flask(__name__)
 app.config.from_pyfile('server.cfg')
 
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 db = Database(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @app.route("/")
 def go_to_sign_in():
@@ -124,11 +131,54 @@ def create_workspace():
         return redirect("/homepage")
 
 
+@app.route("/uploadfile/<workspace_id>", methods=["POST"])
+def uploadFile(workspace_id):
+    if request.method == "POST":
+        print(request.files)
+        if 'file' not in request.files:
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return redirect("/workspace/"+workspace_id)
 
-@app.route("/workspace")
+@app.route("/workspace/<id>", methods=["GET","POST"])
 @login_required
-def workspace():
-    return render_template("workspace.html")
+def workspace(id):
+    workspace = db.Workspace.get(id)
+    daysOfWeek = workspace.dayOfWeek
+    startDate = workspace.startDate
+    endDate = workspace.endDate
+    duration = endDate-startDate
+    days = []
+    daysStr = []
+
+    days_convert = {
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+        7: "Sunday"
+    }
+
+    for i in range(0,len(daysOfWeek)):
+        days.append(int(daysOfWeek[i]))  
+
+    for i in range(duration.days):
+        dayInt = int((startDate + timedelta(days=i)).weekday())
+        if dayInt in days:
+            dayStr = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            daysStr.append(dayStr)
+    
+    return render_template("workspace.html", workspace=workspace,days=daysStr)
+
 
 @login_manager.user_loader
 def load_user(user_id):

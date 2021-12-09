@@ -20,12 +20,24 @@ def go_to_sign_in():
 
 @app.route("/sign_in", methods=["GET", "POST"])
 def sign_in():
+    error = None
     if request.method == "POST":
         email=request.form["email"]
         user = db.User.getByEmail(email)
-        login_user(user)
-        return redirect('/homepage')
-    return render_template("accountform.html", action = "/sign_in", title = "Sign In")
+        if user is not None and user.check_password(request.form['password']):
+            print(request.form['password'])
+            login_user(user)
+            return redirect('/homepage')
+        elif user is None:
+            print(request.form['password'])
+            error = "Email address wasn't registered"
+        elif not user.check_password(request.form['password']):
+            print(request.form['password'])
+            error = "Password entered is not correct"
+        else:
+            print(request.form['password'])
+            error = "Other issue occured"
+    return render_template("accountform.html", action = "/sign_in", title = "Sign In", error = error)
 
 @app.route("/create_account", methods=["GET", "POST"])
 def create_account():
@@ -35,7 +47,7 @@ def create_account():
         school=request.form["school"]
         occupation=request.form["occupation"]
         password=request.form["password"]
-        db.User.create(username, email, password, school, occupation)
+        db.User.create(username, email, occupation, school, password)   
         return redirect('/sign_in')
     else:
         return render_template("accountform.html", action = "/create_account", title = "Create Account")
@@ -59,7 +71,6 @@ def edit_profile():
         name = request.form["username"]
         school = request.form["school"]
         occupation = request.form["occupation"]
-
         if name:
             current_user.updateName(name)
         if school:

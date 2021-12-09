@@ -25,17 +25,13 @@ def sign_in():
         email=request.form["email"]
         user = db.User.getByEmail(email)
         if user is not None and user.check_password(request.form['password']):
-            print(request.form['password'])
             login_user(user)
             return redirect('/homepage')
         elif user is None:
-            print(request.form['password'])
             error = "Email address wasn't registered"
         elif not user.check_password(request.form['password']):
-            print(request.form['password'])
             error = "Password entered is not correct"
         else:
-            print(request.form['password'])
             error = "Other issue occured"
     return render_template("accountform.html", action = "/sign_in", title = "Sign In", error = error)
 

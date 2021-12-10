@@ -18,6 +18,13 @@ class Database:
         workspace.users.remove(user)
         self.db.session.commit()
 
+    def addFileToWorkspace(self,file,workspace):
+        workspace.files.append(file)
+        self.db.session.commit()
+
+    def deleteFileFromWorkspace(self,file,workspace):
+        workspace.files.remove(file)
+        self.db.session.commit()
 
     def delete(self, id):
         review = self.get(id)
@@ -80,6 +87,7 @@ def fileFactory(db):
         name = db.Column(db.String)
         file_path = db.Column(db.String)
         file_type = db.Column(db.String)
+        upload_date = db.Column(db.String)
 
         # many to one
         owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'),
@@ -90,22 +98,28 @@ def fileFactory(db):
         # many to one
         workspace_owner_id = db.Column(db.Integer, db.ForeignKey('workspace.workspace_id'), nullable=False)
 
-        def __init__(self, name, file_path,file_type,owner,workspace_owner):
+        def __init__(self, name, file_path,file_type,owner,workspace_owner,upload_date):
             self.name = name
             self.file_path=file_path
             self.file_type=file_type
             self.owner = owner
             self.workspace_owner = workspace_owner
+            self.upload_date = upload_date
 
         def get(id=None):
             if id:
                 return File.query.get(id)
             return File.query.all()
 
-        def create(name,file_path,file_type,owner,workspace_owner):
-               file = File(name,file_path,file_type,owner,workspace_owner)
+        def getByName(name):
+            return File.query.filter_by(name=name).first()
+
+        def create(name,file_path,file_type,owner,workspace_owner,upload_date):
+               file = File(name,file_path,file_type,owner,workspace_owner,upload_date)
                db.session.add(file)
                db.session.commit()
+
+               return file
 
         def updatePath(self,path):
                self.file_path=path

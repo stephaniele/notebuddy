@@ -20,7 +20,6 @@ db = Database(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
 @app.route("/")
 def go_to_sign_in():
     return redirect("sign_in")
@@ -131,21 +130,29 @@ def create_workspace():
         return redirect("/homepage")
 
 
-@app.route("/uploadfile/<workspace_id>", methods=["POST"])
-def uploadFile(workspace_id):
-    if request.method == "POST":
-        print(request.files)
-        if 'file' not in request.files:
-            flash('No selected file')
-            return redirect("/workspace/"+workspace_id)
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file')
-            return redirect("/workspace/"+workspace_id)
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return redirect("/workspace/"+workspace_id)
+# @app.route("/uploadfile/<workspace_id>", methods=["POST"])
+# def uploadFile(workspace_id):
+#     workspace = db.Workspace.get(workspace_id)
+#     if request.method == "POST":
+#         if 'file' not in request.files:
+#             flash('No selected file')
+#             return redirect("/workspace/"+workspace_id)
+#         rawfile = request.files['file']
+#         if rawfile.filename == '':
+#             flash('No selected file')
+#             return redirect("/workspace/"+workspace_id)
+#         if rawfile:
+#             filename = secure_filename(rawfile.filename) 
+
+#             # save to uploads foler
+#             rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+#             # save reference to database
+#             file_type= filename.rsplit('.', 1)[1].lower()
+#             file_path = "uploads/"+filename       
+#             db.File.create(filename,file_path,file_type,current_user,workspace)
+
+#     return render_template("workspace.html", workspace=workspace,days=daysStr)
 
 @app.route("/workspace/<id>", methods=["GET","POST"])
 @login_required
@@ -156,8 +163,7 @@ def workspace(id):
     endDate = workspace.endDate
     duration = endDate-startDate
     days = []
-    daysStr = []
-
+    workspace_days = {}
     days_convert = {
         1: "Monday",
         2: "Tuesday",
@@ -170,14 +176,49 @@ def workspace(id):
 
     for i in range(0,len(daysOfWeek)):
         days.append(int(daysOfWeek[i]))  
-
     for i in range(duration.days):
         dayInt = int((startDate + timedelta(days=i)).weekday())
         if dayInt in days:
-            dayStr = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
-            daysStr.append(dayStr)
-    
-    return render_template("workspace.html", workspace=workspace,days=daysStr)
+            # datetime object as key
+            day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
+            workspace_days[day] = {}
+            # dictionary as value
+            workspace_days[day]["weekday"] = dayInt
+            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            workspace_days[day]["files"] = []
+            
+    if request.method == "GET":
+        return render_template("workspace.html", workspace=workspace,days=workspace_days)
+
+    else:
+        upload_date = request.form["add-date"]
+        if 'file' not in request.files:
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        rawfile = request.files['file']
+        if rawfile.filename == '':
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        if rawfile:
+            filename = secure_filename(rawfile.filename) 
+
+            # save to uploads foler
+            rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            # save reference to database
+            file_type= filename.rsplit('.', 1)[1].lower()
+            file_path = "uploads/"+filename
+            file = db.File.create(filename,file_path,file_type,current_user,workspace,upload_date)
+
+            # add file to workspace
+            db.addFileToWorkspace(file,workspace)
+
+            # add file to workspace day
+            workspace_days.get(upload_date)["files"].append(file)
+            # print(workspace_days)
+            print(db.File.get())
+
+        return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
 
 @login_manager.user_loader

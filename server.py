@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for,jsonify
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -64,16 +64,21 @@ def logout():
 @login_required
 def edit_profile():
     if request.method == "POST":
-        name = request.form["username"]
-        school = request.form["school"]
-        occupation = request.form["occupation"]
+        user_data = request.get_json()
+        name = user_data[0]["username"]
+        occupation = user_data[1]["occupation"]
+        school = user_data[2]["school"]
+        
         if name:
             current_user.updateName(name)
         if school:
             current_user.updateSchool(school)
         if occupation:
             current_user.updateOccupation(occupation)
-    return redirect("/homepage")
+    
+    results = {'name':name , 'school':school, 'occupation':occupation}
+
+    return jsonify(results)
 
 @app.route('/quit_workspace/<id>',methods=["POST","GET"])
 @login_required
@@ -132,9 +137,10 @@ def create_workspace():
 
 
 
-@app.route("/workspace")
+@app.route("/workspace/<id>")
 @login_required
-def workspace():
+def workspace(id):
+    
     return render_template("workspace.html")
 
 @login_manager.user_loader

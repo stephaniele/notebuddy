@@ -1,9 +1,9 @@
 # notebuddy
 
-How to start development server
+How to start this app for MacOS.
 
 1. Make sure you have python3 and pip3 installed
-2. Go to the project directory and start the virtual environment
+2. Go to the project directory and start a virtual environment
 ```
 python3 -m venv [name]
 source [name]/bin/activate
@@ -13,14 +13,13 @@ source [name]/bin/activate
 ```
 pip3 install -r requirements.txt
 ```
-
-4. If you install other dependencies later, make sure to include them in requirements.txt by typing the command:
-```
-pip3 freeze > requirements.txt
-```
-
-5. How to create a branch
+4. Run reset_db.py to create a database:
 
 ```
-git checkout -b [name]
+python3 reset_db.py
+```
+5. Run server.py to start the app:
+
+```
+python3 server.py
 ```

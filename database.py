@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Database:
     def __init__(self, app):
@@ -32,6 +33,7 @@ def userFactory(db):
         email = db.Column(db.String)
         occupation = db.Column(db.String)
         school = db.Column(db.String)
+        password_hash = db.Column(db.String)
 
         # one to many 
         files = db.relationship('File',backref='owner', lazy='select')
@@ -41,6 +43,7 @@ def userFactory(db):
             self.email = email
             self.occupation = occupation
             self.school = school
+            self.password_hash = User.set_password(password)
 
         def getAll():
             return User.query.all()
@@ -71,6 +74,14 @@ def userFactory(db):
         def updateOccupation(self, occupation):
             self.occupation = occupation
             db.session.commit()
+        
+        def set_password(password):
+            password_hash = generate_password_hash(password)
+            return password_hash
+     
+        def check_password(self, password):
+            return check_password_hash(self.password_hash, password)
+
     return User
 
 def fileFactory(db):

@@ -11,6 +11,9 @@
     <!-- Awsome Font -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/load_profile.js"></script>
     <title>Welcome to notebuddy</title>
   </head>
 
@@ -36,8 +39,8 @@
             </div>
     
             <ul class="list-unstyled components">
-                <h4 >{{current_user.name}}</h4>
-                <h6> {{current_user.school}} </h6>
+                <h4 id="profile_name" >{{current_user.name}}</h4>
+                <h6 id="profile_school"> {{current_user.school}} </h6>
                 <li>
                   <a  data-bs-toggle="modal" data-bs-target="#ProfileModal">
                     Edit Profile Information
@@ -63,7 +66,7 @@
 
 
         <!-- Modals of the page -->
-        <div class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div  class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -71,18 +74,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="/edit_profile" method="POST">
+                
                   <div class="mb-3">
                     <label for="exampleInputName1" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="exampleInputName1" name="username" placeholder="{{current_user.name}}">
+                    <input type="text" class="form-control" id="Username" name="username" placeholder="{{current_user.name}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputName3" class="form-label">Occupation</label>
-                    <input type="text" class="form-control" id="exampleInputName3" name="occupation" placeholder="{{current_user.occupation}}">
+                    <input type="text" class="form-control" id="Occupation" name="occupation" placeholder="{{current_user.occupation}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputName2" class="form-label">School</label>
-                    <input type="text" class="form-control" id="exampleInputName2" name="school" placeholder="{{current_user.school}}">
+                    <input type="text" class="form-control" id="School" name="school" placeholder="{{current_user.school}}">
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail" class="form-label">Email</label>
@@ -92,8 +95,8 @@
                     <label for="exampleInputPassword" class="form-label">Password</label>
                     <input readonly type="password" class="form-control" id="exampleInputPassword" placeholder="123456789">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                  <button type="submit" class="btn btn-primary" onclick="load_profile();">Submit</button>
+                
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -110,22 +113,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form   action = "/create_workspace" method = "POST">
+                <form    action = "/create_workspace" method = "POST">
                   <div class="mb-3">
                     <label for="InputName" class="form-label">Workspace Name</label>
-                    <input type="text" class="form-control" id="InputName" name="workspace_name" required>
+                    <input type="text" class="form-control" id="WorkspaceName" name="workspace_name" required>
                   </div>
                   <div class="mb-3">
                     <label for="InputDescription" class="form-label">Workspace Description</label>
-                    <textarea type="text" class="form-control" id="InputDescription" name="workspace_description" maxlength="200" > </textarea>
+                    <textarea type="text" class="form-control" id="WorkspaceDescription" name="workspace_description" maxlength="200" > </textarea>
                   </div>
                   <div class="mb-3">
                     <label for="date-picker-example1" class="form-label">Start Date</label>
-                    <input  placeholder="Selected date" type="date" id="date-picker-example1" class="form-control datepicker" name = "start_date" required>
+                    <input  placeholder="Selected date" type="date" id="start_date" class="form-control datepicker" name = "start_date" required>
                   </div>
                   <div class="mb-3">
                     <label for="date-picker-example2" class="form-label">End Date</label>
-                    <input  type="date" class="form-control" id="date-picker-example2" name = "end_date" required>
+                    <input  type="date" class="form-control" id="end_date" name = "end_date" required>
                   </div>
                   <div class="mb-3">
                     <label>Days Of Week:</label>
@@ -150,7 +153,7 @@
                       <label for="Friday">Friday</label>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" name="create_workspace">Submit</button>
                 </form>
               </div>
               <div class="modal-footer">

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for,jsonify
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -26,12 +26,20 @@ def go_to_sign_in():
 
 @app.route("/sign_in", methods=["GET", "POST"])
 def sign_in():
+    error = None
     if request.method == "POST":
         email=request.form["email"]
         user = db.User.getByEmail(email)
-        login_user(user)
-        return redirect('/homepage')
-    return render_template("accountform.html", action = "/sign_in", title = "Sign In")
+        if user is not None and user.check_password(request.form['password']):
+            login_user(user)
+            return redirect('/homepage')
+        elif user is None:
+            error = "Email address wasn't registered"
+        elif not user.check_password(request.form['password']):
+            error = "Password entered is not correct"
+        else:
+            error = "Other issue occured"
+    return render_template("accountform.html", action = "/sign_in", title = "Sign In", error = error)
 
 @app.route("/create_account", methods=["GET", "POST"])
 def create_account():
@@ -41,7 +49,7 @@ def create_account():
         school=request.form["school"]
         occupation=request.form["occupation"]
         password=request.form["password"]
-        db.User.create(username, email, password, school, occupation)
+        db.User.create(username, email, occupation, school, password)   
         return redirect('/sign_in')
     else:
         return render_template("accountform.html", action = "/create_account", title = "Create Account")
@@ -62,17 +70,21 @@ def logout():
 @login_required
 def edit_profile():
     if request.method == "POST":
-        name = request.form["username"]
-        school = request.form["school"]
-        occupation = request.form["occupation"]
-
+        user_data = request.get_json()
+        name = user_data[0]["username"]
+        occupation = user_data[1]["occupation"]
+        school = user_data[2]["school"]
+        
         if name:
             current_user.updateName(name)
         if school:
             current_user.updateSchool(school)
         if occupation:
             current_user.updateOccupation(occupation)
-    return redirect("/homepage")
+    
+    results = {'name':name , 'school':school, 'occupation':occupation}
+
+    return jsonify(results)
 
 @app.route('/quit_workspace/<id>',methods=["POST","GET"])
 @login_required
@@ -128,31 +140,6 @@ def create_workspace():
         
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")
-
-
-# @app.route("/uploadfile/<workspace_id>", methods=["POST"])
-# def uploadFile(workspace_id):
-#     workspace = db.Workspace.get(workspace_id)
-#     if request.method == "POST":
-#         if 'file' not in request.files:
-#             flash('No selected file')
-#             return redirect("/workspace/"+workspace_id)
-#         rawfile = request.files['file']
-#         if rawfile.filename == '':
-#             flash('No selected file')
-#             return redirect("/workspace/"+workspace_id)
-#         if rawfile:
-#             filename = secure_filename(rawfile.filename) 
-
-#             # save to uploads foler
-#             rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-#             # save reference to database
-#             file_type= filename.rsplit('.', 1)[1].lower()
-#             file_path = "uploads/"+filename       
-#             db.File.create(filename,file_path,file_type,current_user,workspace)
-
-#     return render_template("workspace.html", workspace=workspace,days=daysStr)
 
 @app.route("/workspace/<id>", methods=["GET","POST"])
 @login_required
@@ -219,7 +206,6 @@ def workspace(id):
             print(db.File.get())
 
         return render_template("workspace.html", workspace=workspace,days=workspace_days)
-
 
 @login_manager.user_loader
 def load_user(user_id):

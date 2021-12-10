@@ -93,6 +93,15 @@ def quit_workspace(id):
     db.deleteUserFromWorkspace(current_user,workspace)
     return redirect("/homepage")
 
+@app.route('/join_workspace',methods=["POST","GET"])
+@login_required
+def join_workspace():
+    secretCode = request.form["secretCode"]
+    workspace = db.Workspace.getBySecretCode(secretCode)[0]
+    print(workspace)
+    db.addUserToWorkspace(current_user,workspace)
+    return redirect("/homepage")
+
 @app.route('/create_workspace',methods=["POST","GET"])
 @login_required
 def create_workspace():
@@ -181,11 +190,11 @@ def workspace(id):
         upload_date = request.form["add-date"]
         if 'file' not in request.files:
             flash('No selected file')
-            return redirect("/workspace/"+workspace_id)
+            return redirect("/workspace/"+id)
         rawfile = request.files['file']
         if rawfile.filename == '':
             flash('No selected file')
-            return redirect("/workspace/"+workspace_id)
+            return redirect("/workspace/"+id)
         if rawfile:
             filename = secure_filename(rawfile.filename) 
 

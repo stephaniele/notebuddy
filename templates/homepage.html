@@ -171,10 +171,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form>
+                <form action="join_workspace" method="POST">
                   <div class="mb-3">
                     <label for="exampleInputName1" class="form-label">Workspace Secret Code</label>
-                    <input type="text" class="form-control" id="exampleInputName1">
+                    <input type="text" class="form-control" name="secretCode" id="exampleInputName1">
                   </div>
                   
                   <button type="submit" class="btn btn-primary">Join</button>

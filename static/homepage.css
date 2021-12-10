@@ -118,14 +118,13 @@ a, a:hover, a:focus {
 }
 
 .workspace-description{
-    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
-
+/* 
 .workspace-btn{
-    
     position: absolute;
     bottom: 10px;
-}
+} */
 
 .title{
     min-width: max-content;

@@ -150,7 +150,73 @@ def create_workspace():
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")
 
-@app.route("/workspace/<id>", methods=["GET","POST"])
+@app.route("/upload_file/<id>", methods=["GET","POST"])
+@login_required
+def upload_file(id):
+    workspace = db.Workspace.get(id)
+    daysOfWeek = workspace.dayOfWeek
+    startDate = workspace.startDate
+    endDate = workspace.endDate
+    duration = endDate-startDate
+    days = []
+    workspace_days = {}
+    days_convert = {
+        0: "Monday",
+        1: "Tuesday",
+        2: "Wednesday",
+        3: "Thursday",
+        4: "Friday",
+        5: "Saturday",
+        6: "Sunday"
+    }
+
+
+    for i in range(0,len(daysOfWeek)):
+        days.append(int(daysOfWeek[i]))  
+    for i in range(duration.days):
+        dayInt = int( (startDate + timedelta(days=i)).weekday() )
+        if dayInt in days:
+            # datetime object as key
+            day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
+            workspace_days[day] = {}
+            # dictionary as value
+            workspace_days[day]["weekday"] = dayInt
+            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            workspace_days[day]["files"] = []
+    
+    upload_date = request.form["add-date"]
+    upload_date_datetime = datetime.strptime(upload_date, '%Y-%m-%d')
+
+    if upload_date_datetime.weekday() not in days:
+        flash('Please pick a valid day in the workspace')
+        return redirect("/workspace/"+id)
+
+    if 'file' not in request.files:
+        flash('No selected file')
+        return redirect("/workspace/"+id)
+    rawfile = request.files['file']
+    if rawfile.filename == '':
+        flash('No selected file')
+        return redirect("/workspace/"+id)
+    if rawfile:
+        filename = secure_filename(rawfile.filename) 
+
+        # save to uploads foler
+        rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # save reference to database
+        file_type= filename.rsplit('.', 1)[1].lower()
+        file_path = "uploads/"+filename
+        file = db.File.create(filename,file_path,file_type,current_user,workspace,upload_date)
+
+        # add file to workspace
+        db.addFileToWorkspace(file,workspace)
+
+        return redirect("/workspace/"+id)
+
+
+
+@app.route("/workspace/<id>")
 @login_required
 def workspace(id):
     workspace = db.Workspace.get(id)
@@ -184,44 +250,16 @@ def workspace(id):
             workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
             workspace_days[day]["files"] = []
     
-    if request.method == "GET":
-        workspace_files = workspace.files
-        for file in workspace_files:
-            upload_date = file.upload_date
-            workspace_days.get(upload_date)["files"].append(file)
+    
+    workspace_files = workspace.files
+    for file in workspace_files:
+        upload_date = file.upload_date
+        workspace_days.get(upload_date)["files"].append(file)
 
-        return render_template("workspace.html", workspace=workspace,days=workspace_days)
+    return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
-    else:
-        upload_date = request.form["add-date"]
-        upload_date_datetime = datetime.strptime(upload_date, '%Y-%m-%d')
-
-        if upload_date_datetime.weekday() in days:
-            flash('Please pick a valid day in the workspace')
-            return redirect("/workspace/"+id)
-
-        if 'file' not in request.files:
-            flash('No selected file')
-            return redirect("/workspace/"+id)
-        rawfile = request.files['file']
-        if rawfile.filename == '':
-            flash('No selected file')
-            return redirect("/workspace/"+id)
-        if rawfile:
-            filename = secure_filename(rawfile.filename) 
-
-            # save to uploads foler
-            rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            # save reference to database
-            file_type= filename.rsplit('.', 1)[1].lower()
-            file_path = "uploads/"+filename
-            file = db.File.create(filename,file_path,file_type,current_user,workspace,upload_date)
-
-            # add file to workspace
-            db.addFileToWorkspace(file,workspace)
-
-        return redirect("/workspace/"+id)
+   
+        
 
 @app.route('/workspace/download_note/<file_path>')
 def download_note(file_path):

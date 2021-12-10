@@ -3,12 +3,18 @@ from flask import Flask, flash, render_template, request, redirect, url_for,json
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 import string
 
+
+
 app = Flask(__name__)
 app.config.from_pyfile('server.cfg')
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 db = Database(app)
 login_manager = LoginManager()
@@ -135,13 +141,71 @@ def create_workspace():
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")
 
-
-
-@app.route("/workspace/<id>")
+@app.route("/workspace/<id>", methods=["GET","POST"])
 @login_required
 def workspace(id):
-    
-    return render_template("workspace.html")
+    workspace = db.Workspace.get(id)
+    daysOfWeek = workspace.dayOfWeek
+    startDate = workspace.startDate
+    endDate = workspace.endDate
+    duration = endDate-startDate
+    days = []
+    workspace_days = {}
+    days_convert = {
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+        7: "Sunday"
+    }
+
+    for i in range(0,len(daysOfWeek)):
+        days.append(int(daysOfWeek[i]))  
+    for i in range(duration.days):
+        dayInt = int((startDate + timedelta(days=i)).weekday())
+        if dayInt in days:
+            # datetime object as key
+            day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
+            workspace_days[day] = {}
+            # dictionary as value
+            workspace_days[day]["weekday"] = dayInt
+            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            workspace_days[day]["files"] = []
+            
+    if request.method == "GET":
+        return render_template("workspace.html", workspace=workspace,days=workspace_days)
+
+    else:
+        upload_date = request.form["add-date"]
+        if 'file' not in request.files:
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        rawfile = request.files['file']
+        if rawfile.filename == '':
+            flash('No selected file')
+            return redirect("/workspace/"+workspace_id)
+        if rawfile:
+            filename = secure_filename(rawfile.filename) 
+
+            # save to uploads foler
+            rawfile.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            # save reference to database
+            file_type= filename.rsplit('.', 1)[1].lower()
+            file_path = "uploads/"+filename
+            file = db.File.create(filename,file_path,file_type,current_user,workspace,upload_date)
+
+            # add file to workspace
+            db.addFileToWorkspace(file,workspace)
+
+            # add file to workspace day
+            workspace_days.get(upload_date)["files"].append(file)
+            # print(workspace_days)
+            print(db.File.get())
+
+        return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -6,7 +6,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-uploads/
+# exclude everything inside uploads
+uploads/*
+
+# except uploads itself
+!uploads/.gitkeep 
 
 # C extensions
 *.so

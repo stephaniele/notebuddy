@@ -124,15 +124,15 @@ def create_workspace():
         
         days_of_week_str = ""
         if (Monday == "on"):
-            days_of_week_str += "1"
+            days_of_week_str += "0"
         if (Tuesday == "on"):
-            days_of_week_str += "2"
+            days_of_week_str += "1"
         if (Wednesday == "on"):
-            days_of_week_str += "3"
+            days_of_week_str += "2"
         if (Thursday == "on"):
-            days_of_week_str += "4"
+            days_of_week_str += "3"
         if (Friday == "on"):
-            days_of_week_str += "5" 
+            days_of_week_str += "4" 
         
         if datetime_start_date > datetime_end_date:
             flash("Sorry, you didn't successfully create a new workspace. It seems that you chose a start date later than the end date.")
@@ -161,19 +161,20 @@ def workspace(id):
     days = []
     workspace_days = {}
     days_convert = {
-        1: "Monday",
-        2: "Tuesday",
-        3: "Wednesday",
-        4: "Thursday",
-        5: "Friday",
-        6: "Saturday",
-        7: "Sunday"
+        0: "Monday",
+        1: "Tuesday",
+        2: "Wednesday",
+        3: "Thursday",
+        4: "Friday",
+        5: "Saturday",
+        6: "Sunday"
     }
+
 
     for i in range(0,len(daysOfWeek)):
         days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
-        dayInt = int((startDate + timedelta(days=i)).weekday())
+        dayInt = int( (startDate + timedelta(days=i)).weekday() )
         if dayInt in days:
             # datetime object as key
             day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
@@ -182,12 +183,23 @@ def workspace(id):
             workspace_days[day]["weekday"] = dayInt
             workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
             workspace_days[day]["files"] = []
-            
+    
     if request.method == "GET":
+        workspace_files = workspace.files
+        for file in workspace_files:
+            upload_date = file.upload_date
+            workspace_days.get(upload_date)["files"].append(file)
+
         return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
     else:
         upload_date = request.form["add-date"]
+        upload_date_datetime = datetime.strptime(upload_date, '%Y-%m-%d')
+
+        if upload_date_datetime.weekday() in days:
+            flash('Please pick a valid day in the workspace')
+            return redirect("/workspace/"+id)
+
         if 'file' not in request.files:
             flash('No selected file')
             return redirect("/workspace/"+id)
@@ -209,12 +221,7 @@ def workspace(id):
             # add file to workspace
             db.addFileToWorkspace(file,workspace)
 
-            # add file to workspace day
-            workspace_days.get(upload_date)["files"].append(file)
-            # print(workspace_days)
-            print(db.File.get())
-
-        return render_template("workspace.html", workspace=workspace,days=workspace_days)
+        return redirect("/workspace/"+id)
 
 @login_manager.user_loader
 def load_user(user_id):

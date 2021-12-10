@@ -258,12 +258,12 @@ def workspace(id):
 
     return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
-   
-        
 
-@app.route('/workspace/download_note/<file_path>')
-def download_note(file_path):
-	return send_file(file_path, as_attachment=True)
+@app.route('/workspace/download_note/<file_id>')
+@login_required
+def download_note(file_id):
+    file_path = db.File.get(file_id).file_path
+    return send_file(file_path, as_attachment=True)
     
 @login_manager.user_loader
 def load_user(user_id):

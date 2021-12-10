@@ -131,6 +131,8 @@ a, a:hover, a:focus {
 }
 
 #alert-btn {
-    margin-left: 20%;
+    position: absolute;
+    bottom:10px;
+    right:20px;
 }
 

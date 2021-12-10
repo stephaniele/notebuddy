@@ -1,6 +1,6 @@
 body {
     height:100%;
-    overflow:hidden;
+    overflow-y:scroll;
     background: rgb(238,174,202);
     background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
@@ -10,7 +10,7 @@ ul{
     justify-content: center;
     padding: 0px;
     margin:0px;
-    overflow: scroll;
+    overflow: hidden;
     height:100%;
 }
 
@@ -37,6 +37,7 @@ h2{
 }
 
 #main-container{
+    
     height:100%;
     display:flex;
     overflow:hidden;
@@ -44,10 +45,12 @@ h2{
 }
 
 #days{
-    margin-left: 30px;
+    margin-left: 16%;
+    
+    
     height:100%;
     width: 100%;
-    overflow:scroll;
+    
     overflow-x: hidden;
 }
 
@@ -89,7 +92,8 @@ h2{
 
 #side-bar{
     justify-content: center;
-    position: absolute;
+    position: fixed;
+    z-index: 1000;
     background-color: white;
     height:80%;
     width: 10%;
@@ -138,10 +142,14 @@ h2{
 /*sidebar*/
 
 #sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    z-index: 1000;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
-    
 
 }
 
@@ -218,4 +226,10 @@ a[data-toggle="collapse"] {
 .list-unstyled h6{
     
     text-align:center;
+}
+
+#alert-btn {
+    position: absolute;
+    bottom:10px;
+    right:20px;
 }

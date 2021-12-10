@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, render_template, request, redirect, url_for,jsonify
+from flask import Flask, flash, render_template, request, redirect, url_for, jsonify, send_file
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -258,8 +258,13 @@ def workspace(id):
 
     return render_template("workspace.html", workspace=workspace,days=workspace_days)
 
-   
-        
+
+@app.route('/workspace/download_note/<file_id>')
+@login_required
+def download_note(file_id):
+    file_path = db.File.get(file_id).file_path
+    return send_file(file_path, as_attachment=True)
+    
 @login_manager.user_loader
 def load_user(user_id):
     return db.User.getById(user_id)

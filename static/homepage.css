@@ -112,19 +112,22 @@ a, a:hover, a:focus {
 
 .card {
     max-height: 100%;
-    min-height: 100%;
-    min-width:fit-content;
+    min-height: max(100%,200px);                                         
+    
+    min-width:200px;
     max-width: 100%;
 }
 
 .workspace-description{
-    padding-bottom: 10px;
+    margin-bottom: 20%;
 }
-/* 
+
 .workspace-btn{
     position: absolute;
-    bottom: 10px;
-} */
+    left:10%;
+    right:10%;
+    bottom: 10%;
+}
 
 .title{
     min-width: max-content;

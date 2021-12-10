@@ -75,11 +75,11 @@ def edit_profile():
         occupation = user_data[1]["occupation"]
         school = user_data[2]["school"]
         
-        if name:
+        if len(name)>0:
             current_user.updateName(name)
-        if school:
+        if len(school)>0:
             current_user.updateSchool(school)
-        if occupation:
+        if len(occupation)>0:
             current_user.updateOccupation(occupation)
     
     results = {'name':name , 'school':school, 'occupation':occupation}

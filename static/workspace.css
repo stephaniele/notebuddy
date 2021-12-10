@@ -233,3 +233,9 @@ a[data-toggle="collapse"] {
     bottom:10px;
     right:20px;
 }
+
+.file-title{
+    padding-left: 3%;
+    max-width: 10%;
+}
+

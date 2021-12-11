@@ -180,11 +180,11 @@ def upload_file(id):
         if ((dayInt in days) & (month_year < today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
-            workspace_days[day] = {}
+            workspace_days[day_key] = {}
             # dictionary as value
-            workspace_days[day]["weekday"] = dayInt
-            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
-            workspace_days[day]["files"] = []
+            workspace_days[day_key]["weekday"] = dayInt
+            workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
+            workspace_days[day_key]["files"] = []
     
     upload_date = request.form["add-date"]
     upload_date_datetime = datetime.strptime(upload_date, '%Y-%m-%d')
@@ -248,16 +248,17 @@ def workspace(id):
         if ((dayInt in days) & (month_year < today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
-            workspace_days[day] = {}
+            workspace_days[day_key] = {}
             # dictionary as value
-            workspace_days[day]["weekday"] = dayInt
-            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
-            workspace_days[day]["files"] = []
+            workspace_days[day_key]["weekday"] = dayInt
+            workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
+            workspace_days[day_key]["files"] = []
     
     
     workspace_files = workspace.files
     for file in workspace_files:
         upload_date = file.upload_date
+        print(file,upload_date)
         workspace_days.get(upload_date)["files"].append(file)
 
     return render_template("workspace.html", workspace=workspace,days=workspace_days,today=today)

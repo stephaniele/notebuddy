@@ -23,8 +23,12 @@ function load_profile(){
           var name = result.name;
           var school = result.school
           var occupation = result.occupation
-          document.getElementById("profile_name").innerHTML = name
-          document.getElementById("profile_school").innerHTML = school
+          if (name.length > 0){
+            document.getElementById("profile_name").innerHTML = name
+          }
+          if(school.length > 0){
+            document.getElementById("profile_school").innerHTML = school
+          }
           $("#ProfileModal").modal("hide")
         } 
     });

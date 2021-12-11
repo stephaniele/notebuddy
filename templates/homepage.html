@@ -91,10 +91,6 @@
                     <label for="exampleInputEmail" class="form-label">Email</label>
                     <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="{{current_user.email}}">
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword" class="form-label">Password</label>
-                    <input readonly type="password" class="form-control" id="exampleInputPassword" placeholder="123456789">
-                  </div>
                   <button type="submit" class="btn btn-primary" onclick="load_profile();">Submit</button>
                 
               </div>
@@ -231,7 +227,9 @@
                     <div class="card ">                        
                       <div class="card-body">
                         <p class="card-text">{{workspace.name}}</p>
-                        <p class="card-text workspace-description">{{workspace.description}}</p>
+                        <div class="workspace-description">
+                          <p class="card-text">{{workspace.description}}</p>
+                        </div>
                         <div class="d-flex justify-content-between align-items-center">
                           <div class="btn-group workspace-btn">
                             <a href="/workspace/{{workspace.id}}" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>

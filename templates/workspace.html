@@ -64,15 +64,15 @@
 				{% for file in days.get(day).get("files") %}
 					<div class=" col file-container">
 						<div class="file">
-							<div class="file-name">{{file.name}}</div>
 							<a href = "/workspace/download_note/{{file.id}}">
-						        <img class="file-img" src="/static/pdf.png">
+
+						        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
 						    </a>
+							<div class="card-text file-title">{{file.name}}</div>
+
 						</div>
 						<div class="img-info">
-							<img class="file-profile-pic" src="/static/person.jpg">
-							<img class="heart" src="/static/heart.png">
-							<span class="likes">5</span>
+							
 						</div>
 					</div>
 				{% endfor %}

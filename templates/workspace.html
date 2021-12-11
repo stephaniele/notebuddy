@@ -69,8 +69,8 @@
 							<a href = "/workspace/download_note/{{file.id}}">
 						        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
 						    </a>
+						    <div class="overlay"></div>
 							<div class="card-text file-title">{{file.name}}</div>
-
 						</div>
 					</div>
 				{% endfor %}
@@ -90,12 +90,12 @@
 	      <div class="modal-body">
 	        <form id="add-file" action = "/upload_file/{{workspace.id}}" method = "POST" enctype="multipart/form-data">
 	        	<div style="margin-bottom: 20px">
-		        	<label for="file-picker">Upload file</label>
+		        	<label for="file-picker">Upload file: </label>
 		        	<input required type="file" id="file-picker" name="file"
   					accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf">
   				</div>
   				<div>
-	  				<label for="file-picker">Choose date</label>
+	  				<label for="file-picker">Choose date: </label>
 	  				<input required type="date" id="add-date" name="add-date" min={{workspace.startDate}} max={{today}}>
   				</div>
 	        </form>

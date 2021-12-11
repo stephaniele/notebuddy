@@ -175,14 +175,14 @@ def upload_file(id):
         days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
         day = endDate - timedelta(days=i)
-        month_year = day.date()
+        curr_date = day.date()
         dayInt = int(day.weekday())
-        if ((dayInt in days) & (month_year < today)):
+        if ((dayInt in days) & (curr_date < today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
             workspace_days[day_key] = {}
             # dictionary as value
-            workspace_days[day_key]["weekday"] = dayInt
+            workspace_days[day_key]["id"] = str(days_convert.get(dayInt)+str(day.year)+str(day.month)+ str(day.day))
             workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
             workspace_days[day_key]["files"] = []
     
@@ -243,22 +243,22 @@ def workspace(id):
         days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
         day = endDate - timedelta(days=i)
-        month_year = day.date()
+        curr_date = day.date()
         dayInt = int(day.weekday())
-        if ((dayInt in days) & (month_year < today)):
+        if ((dayInt in days) & (curr_date< today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
             workspace_days[day_key] = {}
             # dictionary as value
-            workspace_days[day_key]["weekday"] = dayInt
+            workspace_days[day_key]["id"] = str(days_convert.get(dayInt)+str(day.year)+str(day.month)+ str(day.day))
             workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
+            print(str(days_convert.get(dayInt)))
             workspace_days[day_key]["files"] = []
     
     
     workspace_files = workspace.files
     for file in workspace_files:
         upload_date = file.upload_date
-        print(file,upload_date)
         workspace_days.get(upload_date)["files"].append(file)
 
     return render_template("workspace.html", workspace=workspace,days=workspace_days,today=today)

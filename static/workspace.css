@@ -22,7 +22,7 @@ img{
     width:100px;
 }
 
-h2{
+h2, hr{
     margin:0px;
 }
 
@@ -82,6 +82,10 @@ h2{
     margin-top:10px;
     display: flex;
     flex-flow: row wrap;
+}
+.day-wrapper{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 .file-name{
     width:100px;

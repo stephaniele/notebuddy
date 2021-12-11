@@ -42,10 +42,10 @@
             </li>
            
             <li>
-                <a data-bs-toggle="modal" data-bs-target="#addModal">Add file</a>
+                <a data-bs-toggle="modal" data-bs-target="#addModal" role="button">Add file</a>
             </li>
             <li>
-                <a data-bs-toggle="modal" data-bs-target="#inviteModal">Invite members</a>
+                <a data-bs-toggle="modal" data-bs-target="#inviteModal" role="button">Invite members</a>
             </li>
             <li>
                 <a href="/homepage">Back</a>
@@ -57,9 +57,12 @@
 	<div class="container" id="days">
 		<!-- days is dictionary. {weekday: int, dayStr: str, files: []} -->
 		{% for day in days %}
-			<div class="row day">
-				<h3 class="dayofWeek" data-toggle="collapse" data-target=".file-container">{{days.get(day).get("dayStr")}}</h3>
-				<hr>
+		<div class="day-wrapper">
+			<h3 class="dayofWeek" role="button" data-bs-toggle="collapse" data-bs-target=#{{days.get(day).id}} aria-controls=#{{days.get(day).id}} aria-expanded="false">
+			{{days.get(day).get("dayStr")}}
+			</h3>
+			<hr>
+			<div class="row day collapse show" id={{days.get(day).id}}>
 				{% for file in days.get(day).get("files") %}
 					<div class=" col file-container">
 						<div class="file">
@@ -72,6 +75,7 @@
 					</div>
 				{% endfor %}
 			</div>
+		</div>
 		{% endfor %}
 	</div>
 	<!-- Add File Modal -->
@@ -79,7 +83,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="addModalTitle" >Add file</h5>
+	        <h5 class="modal-title" id="addModalTitle">Add file</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 	        </button>
 	      </div>

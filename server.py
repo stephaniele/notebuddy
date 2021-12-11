@@ -3,7 +3,7 @@ from flask import Flask, flash, render_template, request, redirect, url_for, jso
 from werkzeug.utils import secure_filename
 from database import Database, userFactory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import random
 import string
 
@@ -169,19 +169,21 @@ def upload_file(id):
         5: "Saturday",
         6: "Sunday"
     }
-
+    today = date.today()
 
     for i in range(0,len(daysOfWeek)):
         days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
-        dayInt = int( (startDate + timedelta(days=i)).weekday() )
-        if dayInt in days:
+        day = endDate - timedelta(days=i)
+        month_year = day.date()
+        dayInt = int(day.weekday())
+        if ((dayInt in days) & (month_year < today)):
             # datetime object as key
-            day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
+            day_key = datetime.strftime(day, '%Y-%m-%d')
             workspace_days[day] = {}
             # dictionary as value
             workspace_days[day]["weekday"] = dayInt
-            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
             workspace_days[day]["files"] = []
     
     upload_date = request.form["add-date"]
@@ -235,19 +237,21 @@ def workspace(id):
         5: "Saturday",
         6: "Sunday"
     }
-
+    today = date.today()
 
     for i in range(0,len(daysOfWeek)):
         days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
-        dayInt = int( (startDate + timedelta(days=i)).weekday() )
-        if dayInt in days:
+        day = endDate - timedelta(days=i)
+        month_year = day.date()
+        dayInt = int(day.weekday())
+        if ((dayInt in days) & (month_year < today)):
             # datetime object as key
-            day = datetime.strftime(startDate + timedelta(days=i), '%Y-%m-%d')
+            day_key = datetime.strftime(day, '%Y-%m-%d')
             workspace_days[day] = {}
             # dictionary as value
             workspace_days[day]["weekday"] = dayInt
-            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str((startDate + timedelta(days=i)).month)+"/"+ str((startDate + timedelta(days=i)).day)
+            workspace_days[day]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
             workspace_days[day]["files"] = []
     
     
@@ -256,7 +260,7 @@ def workspace(id):
         upload_date = file.upload_date
         workspace_days.get(upload_date)["files"].append(file)
 
-    return render_template("workspace.html", workspace=workspace,days=workspace_days)
+    return render_template("workspace.html", workspace=workspace,days=workspace_days,today=today)
 
 
 @app.route('/workspace/download_note/<file_id>')

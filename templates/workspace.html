@@ -55,7 +55,6 @@
     </nav>
 
 	<div class="container" id="days">
-
 		<!-- days is dictionary. {weekday: int, dayStr: str, files: []} -->
 		{% for day in days %}
 			<div class="row day">
@@ -65,23 +64,17 @@
 					<div class=" col file-container">
 						<div class="file">
 							<a href = "/workspace/download_note/{{file.id}}">
-
 						        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
 						    </a>
 							<div class="card-text file-title">{{file.name}}</div>
 
 						</div>
-						<div class="img-info">
-							
-						</div>
 					</div>
 				{% endfor %}
 			</div>
-
 		{% endfor %}
-
-
-		<!-- Add File Modal -->
+	</div>
+	<!-- Add File Modal -->
 	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -99,7 +92,7 @@
   				</div>
   				<div>
 	  				<label for="file-picker">Choose date</label>
-	  				<input required type="date" id="add-date" name="add-date" min={{workspace.startDate}} max={{workspace.endDate}}>
+	  				<input required type="date" id="add-date" name="add-date" min={{workspace.startDate}} max={{today}}>
   				</div>
 	        </form>
 	      </div>
@@ -122,7 +115,7 @@
 	      </div>
 	      <div class="modal-body">
 			<p>You can share this secret code with other people to let them join this workspace:</p>
-	      	<p> {{workspace.secretCode}}<p>
+	      	<p> {{workspace.secretCode}}</p>
 	      	
 	      </div>
 	      <div class="modal-footer">
@@ -131,7 +124,6 @@
 	    </div>
 	  </div>
 	</div>
-
 </div>
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

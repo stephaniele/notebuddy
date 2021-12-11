@@ -235,7 +235,27 @@ a[data-toggle="collapse"] {
 }
 
 .file-title{
-    padding-left: 3%;
-    max-width: 10%;
+    font-size:14px;
+    max-width: 150px;
+    /*overflow-wrap:break-word;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+.file-container{
+    max-width: 150px;
+    margin:10px;
+    padding: 0px;
+}
+
+.file-img{
+    margin-bottom: 5px;
+}
+
+.file {
+    max-width: 100px;
+    text-align: center;
+}
+
+
 

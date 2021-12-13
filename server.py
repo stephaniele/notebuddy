@@ -134,6 +134,7 @@ def create_workspace():
         for i in range(duration.days):
             day = datetime_end_date - timedelta(days=i)
             dayInt = str(day.weekday())
+            print(day,dayInt,days_of_week_str)
             if dayInt in days_of_week_str:
                 hasValidDay = True
 

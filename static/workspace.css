@@ -28,12 +28,9 @@ h2, hr{
 
 #add-button{
     background-image: url("/static/add.png");
-/*    position:absolute;*/
     width: 20%;
     height:20%;
     background-repeat: no-repeat;
-/*    top:5%;
-    left: 90%;*/
 }
 
 #main-container{
@@ -250,7 +247,6 @@ a[data-toggle="collapse"] {
 .file-title{
     font-size:14px;
     max-width: 150px;
-    /*overflow-wrap:break-word;*/
     overflow: hidden;
     text-overflow: ellipsis;
 }

@@ -114,6 +114,8 @@ def create_workspace():
         Wednesday = request.form.get("Wednesday")
         Thursday = request.form.get("Thursday")
         Friday = request.form.get("Friday")
+
+        today=datetime.today()
         
         days_of_week_str = ""
         if (Monday == "on"):
@@ -127,12 +129,14 @@ def create_workspace():
         if (Friday == "on"):
             days_of_week_str += "4" 
         
-        if datetime_start_date > datetime_end_date:
-            flash("Sorry, you didn't successfully create a new workspace. It seems that you chose a start date later than the end date.")
+        if datetime_start_date > today:
+            flash("Please pick a start date earlier than equal or earlier than today")
             return redirect("/homepage")
-        
+        if datetime_start_date > datetime_end_date:
+            flash("Please pick an end date later than the start date.")
+            return redirect("/homepage")
         if len(days_of_week_str) == 0:
-            flash("Sorry, you didn't successfully create a new workspace. It seems that you didn't select any days of the week.")
+            flash("Please pick days of classes for your workspace")
             return redirect("/homepage")
         
         letters = string.ascii_lowercase

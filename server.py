@@ -219,6 +219,13 @@ def upload_file(id):
         db.addFileToWorkspace(file,workspace)
 
         return redirect("/workspace/"+id)
+@app.route("/workspace/<workspace_id>/delete_file/<file_id>", methods=["GET","POST"])
+@login_required
+def delete_file(workspace_id,file_id):
+    workspace = db.Workspace.get(workspace_id)
+    file = db.File.get(file_id)
+    db.File.delete(file,workspace)
+    days = getWorkspaceDays(workspace)
 
 @app.route("/workspace/<id>")
 @login_required

@@ -1,11 +1,7 @@
 function load_profile(){
-   
-    
-
     var username = document.getElementById("Username").value
     var occupation = document.getElementById("Occupation").value
     var school = document.getElementById("School").value
-    
 
     var user_data = [
         {"username":username},

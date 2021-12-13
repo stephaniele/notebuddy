@@ -26,21 +26,17 @@
 	{% block page_content %}{% endblock %}
 </div>
 
-
 <div id="main-container">
     <nav id="sidebar">
         <div class="sidebar-header">
             <h3>{{workspace.name}}</h3>
         </div>
-
         <ul class="list-unstyled components">
-
             <li>
                 <p id="workspace-description">
                     {{workspace.description}}
                 </p>
             </li>
-           
             <li>
                 <a data-bs-toggle="modal" data-bs-target="#addModal" role="button">Add file</a>
             </li>
@@ -49,8 +45,7 @@
             </li>
             <li>
                 <a href="/homepage">Back</a>
-            </li>
-            
+            </li>   
         </ul>
     </nav>
 
@@ -78,6 +73,7 @@
 		</div>
 		{% endfor %}
 	</div>
+	
 	<!-- Add File Modal -->
 	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -120,7 +116,6 @@
 	      <div class="modal-body">
 			<p>You can share this secret code with other people to let them join this workspace:</p>
 	      	<p> {{workspace.secretCode}}</p>
-	      	
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

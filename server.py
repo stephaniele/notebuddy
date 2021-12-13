@@ -14,6 +14,7 @@ UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = Database(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -77,9 +78,7 @@ def edit_profile():
             current_user.updateSchool(school)
         if len(occupation)>0:
             current_user.updateOccupation(occupation)
-    
     results = {'name':name , 'school':school, 'occupation':occupation}
-
     return jsonify(results)
 
 @app.route('/quit_workspace/<id>',methods=["POST","GET"])
@@ -106,10 +105,8 @@ def create_workspace():
         description = request.form["workspace_description"]
         start_date = request.form["start_date"]
         end_date = request.form["end_date"]
-
         datetime_start_date = datetime.strptime(start_date, '%Y-%m-%d')
         datetime_end_date = datetime.strptime(end_date, '%Y-%m-%d')
-
 
         # Transform days of week to a string
         Monday = request.form.get("Monday")
@@ -133,16 +130,14 @@ def create_workspace():
         if datetime_start_date > datetime_end_date:
             flash("Sorry, you didn't successfully create a new workspace. It seems that you chose a start date later than the end date.")
             return redirect("/homepage")
-
+        
         if len(days_of_week_str) == 0:
             flash("Sorry, you didn't successfully create a new workspace. It seems that you didn't select any days of the week.")
             return redirect("/homepage")
         
         letters = string.ascii_lowercase
         secretCode = ''.join(random.choice(letters) for i in range(10)) + name
-
         workspace = db.Workspace.create(name,description,datetime_start_date,datetime_end_date,days_of_week_str,secretCode)
-        
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")
 
@@ -176,6 +171,7 @@ def createDayRows(workspace):
         day = endDate - timedelta(days=i)
         curr_date = day.date()
         dayInt = int(day.weekday())
+        
         if ((dayInt in days) & (curr_date < today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
@@ -198,14 +194,16 @@ def upload_file(id):
     if upload_date_datetime.weekday() not in days:
         flash('Please pick a valid day in the workspace')
         return redirect("/workspace/"+id)
-
+    
     if 'file' not in request.files:
         flash('No selected file')
         return redirect("/workspace/"+id)
     rawfile = request.files['file']
+    
     if rawfile.filename == '':
         flash('No selected file')
         return redirect("/workspace/"+id)
+    
     if rawfile:
         filename = secure_filename(rawfile.filename) 
 
@@ -222,7 +220,6 @@ def upload_file(id):
 
         return redirect("/workspace/"+id)
 
-
 @app.route("/workspace/<id>")
 @login_required
 def workspace(id):
@@ -231,6 +228,7 @@ def workspace(id):
     today = date.today()
 
     workspace_files = workspace.files
+    
     for file in workspace_files:
         upload_date = file.upload_date
         workspace_days.get(upload_date)["files"].append(file)

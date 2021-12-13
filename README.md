@@ -23,3 +23,5 @@ python3 reset_db.py
 ```
 python3 server.py
 ```
+
+All up to date and ready to be graded!

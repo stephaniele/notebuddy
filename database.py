@@ -131,9 +131,8 @@ def fileFactory(db):
                db.session.commit()
 
                return file
-        def delete(file,workspace):
-            workspace.files.remove(file)
-            db.session.commit()
+        def delete(file):
+            db.session.delete(file)
 
         def updatePath(self,path):
             self.file_path=path

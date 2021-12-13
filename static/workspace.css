@@ -87,6 +87,10 @@ h4{
 
 }
 
+#workspace-description{
+    font-style: italic;
+}
+
 #sidebar .sidebar-header {
     background: #6d7fcc;
     padding: 20px;
@@ -212,11 +216,11 @@ a[data-toggle="collapse"] {
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0.8;
     position: absolute;
     width: 90px;
     height: 30px;
     background: white;
-    opacity: 0.8;
     top:0%;
     vertical-align: middle;
 }
@@ -226,5 +230,6 @@ a[data-toggle="collapse"] {
 }
 .overlay:hover:after{
     font-size: 15px;
+    opacity: 0.8;
     content:'Delete';
 }

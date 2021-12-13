@@ -30,7 +30,7 @@ def sign_in():
         user = db.User.getByEmail(email)
         if user is not None and user.check_password(request.form['password']):
             login_user(user)
-            return redirect('/homepage')n
+            return redirect('/homepage')
         elif user is None:
             error = "Email address wasn't registered"
         elif not user.check_password(request.form['password']):
@@ -236,6 +236,7 @@ def workspace(id):
 
     for i in range(0,len(daysOfWeek)):
         days.append(int(daysOfWeek[i]))  
+        
     for i in range(duration.days):
         day = endDate - timedelta(days=i)
         curr_date = day.date()

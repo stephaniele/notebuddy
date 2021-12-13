@@ -107,6 +107,8 @@ def create_workspace():
         end_date = request.form["end_date"]
         datetime_start_date = datetime.strptime(start_date, '%Y-%m-%d')
         datetime_end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        duration = datetime_end_date-datetime_start_date
+        hasValidDay = False
 
         # Transform days of week to a string
         Monday = request.form.get("Monday")
@@ -114,6 +116,8 @@ def create_workspace():
         Wednesday = request.form.get("Wednesday")
         Thursday = request.form.get("Thursday")
         Friday = request.form.get("Friday")
+
+        today=datetime.today()
         
         days_of_week_str = ""
         if (Monday == "on"):
@@ -126,13 +130,24 @@ def create_workspace():
             days_of_week_str += "3"
         if (Friday == "on"):
             days_of_week_str += "4" 
-        
-        if datetime_start_date > datetime_end_date:
-            flash("Sorry, you didn't successfully create a new workspace. It seems that you chose a start date later than the end date.")
+
+        for i in range(duration.days):
+            day = datetime_end_date - timedelta(days=i)
+            dayInt = str(day.weekday())
+            if dayInt in days_of_week_str:
+                hasValidDay = True
+
+        if hasValidDay == False:
+            flash("Please extend workspace duration to include at least one class day you picked")
             return redirect("/homepage")
-        
+        if datetime_start_date > today:
+            flash("Please pick a start date earlier than or equal to today")
+            return redirect("/homepage")
+        if datetime_start_date > datetime_end_date:
+            flash("Please pick an end date later than the start date.")
+            return redirect("/homepage")
         if len(days_of_week_str) == 0:
-            flash("Sorry, you didn't successfully create a new workspace. It seems that you didn't select any days of the week.")
+            flash("Please pick days of classes for your workspace")
             return redirect("/homepage")
         
         letters = string.ascii_lowercase

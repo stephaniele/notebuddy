@@ -1,6 +1,9 @@
-# notebuddy
+# Notebuddy
 
-How to start this app for MacOS.
+Notebuddy is a website where students can create and join workspaces, inside which they can upload their notes to share with each other.
+
+
+### Setting up the environment and running the app
 
 1. Make sure you have python3 and pip3 installed
 2. Go to the project directory and start a virtual environment
@@ -24,4 +27,4 @@ python3 reset_db.py
 python3 server.py
 ```
 
-All up to date and ready to be graded!
+All up to date and ready to run!

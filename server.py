@@ -7,14 +7,11 @@ from datetime import datetime, timedelta, date
 import random
 import string
 
-
-
 app = Flask(__name__)
 app.config.from_pyfile('server.cfg')
 
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 
 db = Database(app)
 login_manager = LoginManager()
@@ -57,7 +54,6 @@ def create_account():
 @app.route("/homepage") 
 @login_required
 def index():
-    
     return render_template("homepage.html", workspaces = current_user.workspaces, current_user=current_user)
 
 @app.route("/logout") 
@@ -150,16 +146,20 @@ def create_workspace():
         db.addUserToWorkspace(current_user,workspace)
         return redirect("/homepage")
 
-@app.route("/upload_file/<id>", methods=["GET","POST"])
-@login_required
-def upload_file(id):
-    workspace = db.Workspace.get(id)
+# Get workspace's dayofWeek as int[]
+def getWorkspaceDays(workspace):
     daysOfWeek = workspace.dayOfWeek
+    days = []
+    for i in range(0,len(daysOfWeek)):
+        days.append(int(daysOfWeek[i]))
+    return days
+
+# Creates a dictionary of Workspace's days and their useful attributes
+def createDayRows(workspace):
     startDate = workspace.startDate
     endDate = workspace.endDate
+    days = getWorkspaceDays(workspace)
     duration = endDate-startDate
-    days = []
-    workspace_days = {}
     days_convert = {
         0: "Monday",
         1: "Tuesday",
@@ -169,10 +169,9 @@ def upload_file(id):
         5: "Saturday",
         6: "Sunday"
     }
+    workspace_rows = {}
     today = date.today()
 
-    for i in range(0,len(daysOfWeek)):
-        days.append(int(daysOfWeek[i]))  
     for i in range(duration.days):
         day = endDate - timedelta(days=i)
         curr_date = day.date()
@@ -180,12 +179,19 @@ def upload_file(id):
         if ((dayInt in days) & (curr_date < today)):
             # datetime object as key
             day_key = datetime.strftime(day, '%Y-%m-%d')
-            workspace_days[day_key] = {}
+            workspace_rows[day_key] = {}
             # dictionary as value
-            workspace_days[day_key]["id"] = str(days_convert.get(dayInt)+str(day.year)+str(day.month)+ str(day.day))
-            workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
-            workspace_days[day_key]["files"] = []
-    
+            workspace_rows[day_key]["id"] = str(days_convert.get(dayInt)+str(day.year)+str(day.month)+ str(day.day))
+            workspace_rows[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
+            workspace_rows[day_key]["files"] = []
+    return workspace_rows
+
+@app.route("/upload_file/<id>", methods=["GET","POST"])
+@login_required
+def upload_file(id):
+    workspace = db.Workspace.get(id)
+    days = getWorkspaceDays(workspace)
+
     upload_date = request.form["add-date"]
     upload_date_datetime = datetime.strptime(upload_date, '%Y-%m-%d')
 
@@ -217,45 +223,13 @@ def upload_file(id):
         return redirect("/workspace/"+id)
 
 
-
 @app.route("/workspace/<id>")
 @login_required
 def workspace(id):
     workspace = db.Workspace.get(id)
-    daysOfWeek = workspace.dayOfWeek
-    startDate = workspace.startDate
-    endDate = workspace.endDate
-    duration = endDate-startDate
-    days = []
-    workspace_days = {}
-    days_convert = {
-        0: "Monday",
-        1: "Tuesday",
-        2: "Wednesday",
-        3: "Thursday",
-        4: "Friday",
-        5: "Saturday",
-        6: "Sunday"
-    }
+    workspace_days = createDayRows(workspace)
     today = date.today()
 
-    for i in range(0,len(daysOfWeek)):
-        days.append(int(daysOfWeek[i]))  
-    for i in range(duration.days):
-        day = endDate - timedelta(days=i)
-        curr_date = day.date()
-        dayInt = int(day.weekday())
-        if ((dayInt in days) & (curr_date< today)):
-            # datetime object as key
-            day_key = datetime.strftime(day, '%Y-%m-%d')
-            workspace_days[day_key] = {}
-            # dictionary as value
-            workspace_days[day_key]["id"] = str(days_convert.get(dayInt)+str(day.year)+str(day.month)+ str(day.day))
-            workspace_days[day_key]["dayStr"] = str(days_convert.get(dayInt)) + ", " + str(day.month)+"/"+ str(day.day)
-            print(str(days_convert.get(dayInt)))
-            workspace_days[day_key]["files"] = []
-    
-    
     workspace_files = workspace.files
     for file in workspace_files:
         upload_date = file.upload_date

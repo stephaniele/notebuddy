@@ -51,27 +51,32 @@
 
 	<div class="container" id="days">
 		<!-- days is dictionary. {weekday: int, dayStr: str, files: []} -->
-		{% for day in days %}
-		<div class="day-wrapper">
-			<h3 class="dayofWeek" role="button" data-bs-toggle="collapse" data-bs-target=#{{days.get(day).id}} aria-controls=#{{days.get(day).id}} aria-expanded="false">
-			{{days.get(day).get("dayStr")}}
-			</h3>
-			<hr>
-			<div class="row day collapse show" id={{days.get(day).id}}>
-				{% for file in days.get(day).get("files") %}
-					<div class=" col file-container">
-						<div class="file">
-							<a href = "/workspace/download_note/{{file.id}}">
-						        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
-						    </a>
-						    <div class="overlay" role="button" href="/workspace/{{workspace.id}}/delete_file/{{file.id}}"></div>
-							<div class="card-text file-title">{{file.name}}</div>
-						</div>
+		{% if days|length > 0 %}
+			{% for day in days %}
+				<div class="day-wrapper">
+					<h3 class="dayofWeek" role="button" data-bs-toggle="collapse" data-bs-target=#{{days.get(day).id}} aria-controls=#{{days.get(day).id}} aria-expanded="false">
+					{{days.get(day).get("dayStr")}}
+					</h3>
+					<hr>
+					<div class="row day collapse show" id={{days.get(day).id}}>
+						{% for file in days.get(day).get("files") %}
+							<div class=" col file-container">
+								<div class="file">
+									<a href = "/workspace/download_note/{{file.id}}">
+								        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
+								    </a>
+								    <div class="overlay" role="button"></div>
+									<div class="card-text file-title">{{file.name}}</div>
+								</div>
+							</div>
+						{% endfor %}
 					</div>
-				{% endfor %}
-			</div>
-		</div>
-		{% endfor %}
+				</div>
+			{% endfor %}
+		{% else %}
+			<h4>Classes haven't started yet. Come back later!</h4>
+		{% endif %}
+		
 	</div>
 	
 	<!-- Add File Modal -->

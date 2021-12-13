@@ -107,6 +107,8 @@ def create_workspace():
         end_date = request.form["end_date"]
         datetime_start_date = datetime.strptime(start_date, '%Y-%m-%d')
         datetime_end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        duration = datetime_end_date-datetime_start_date
+        hasValidDay = False
 
         # Transform days of week to a string
         Monday = request.form.get("Monday")
@@ -128,9 +130,18 @@ def create_workspace():
             days_of_week_str += "3"
         if (Friday == "on"):
             days_of_week_str += "4" 
-        
+
+        for i in range(duration.days):
+            day = datetime_end_date - timedelta(days=i)
+            dayInt = str(day.weekday())
+            if dayInt in days_of_week_str:
+                hasValidDay = True
+
+        if hasValidDay == False:
+            flash("Please extend workspace duration to include at least one class day you picked")
+            return redirect("/homepage")
         if datetime_start_date > today:
-            flash("Please pick a start date earlier than equal or earlier than today")
+            flash("Please pick a start date earlier than or equal to today")
             return redirect("/homepage")
         if datetime_start_date > datetime_end_date:
             flash("Please pick an end date later than the start date.")

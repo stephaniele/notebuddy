@@ -29,6 +29,7 @@
       {% block page_content %}{% endblock %}
     </div>
 
+
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
@@ -60,6 +61,64 @@
                 </li>
             </ul>
         </nav>
+        <div id="content">
+            <div class="container mt-4">
+                <div class="row  justify-content-center">
+                    <div class="col-md-4 title">
+                        <h1>Your Workspaces</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="album py-5">
+              <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-3 gx-3">
+                  {% for workspace in workspaces %}
+                  <!-- Quit Modal -->
+                  <div class="modal fade" id="QuitModal_{{workspace.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/quit_workspace/{{workspace.id}}" method="POST">
+                            <div class="container">
+                              <h1>Quit the workspace</h1>
+                              <h3>Are you sure you want to quit {{workspace.name}}?</h3>
+                              <button type="submit" class="btn  btn-lg btn-outline-secondary">Yes</button>
+                              <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">No</button>
+                            </div>
+                          </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card ">                        
+                      <div class="card-body">
+                        <p class="card-text">{{workspace.name}}</p>
+                        <div class="workspace-description">
+                          <p class="card-text">{{workspace.description}}</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group workspace-btn">
+                            <a href="/workspace/{{workspace.id}}" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
+                            <a  data-bs-toggle="modal" type="button" class="btn btn-sm btn-outline-secondary" data-bs-target="#QuitModal_{{workspace.id}}">
+                              Quit
+                            </a> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+        </div>
         
         <!-- Modals for User Profile -->
         <div  class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -176,65 +235,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div id="content">
-            <div class="container mt-4">
-                <div class="row  justify-content-center">
-                    <div class="col-md-4 title">
-                        <h1>Your Workspaces</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="album py-5">
-              <div class="container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-3 gx-3">
-                  {% for workspace in workspaces %}
-                  <!-- Quit Modal -->
-                  <div class="modal fade" id="QuitModal_{{workspace.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <form action="/quit_workspace/{{workspace.id}}" method="POST">
-                            <div class="container">
-                              <h3>Quit the workspace</h3>
-                              <h4>Are you sure you want to quit {{workspace.name}}?</h4>
-                              <button type="submit" class="btn  btn-lg btn-outline-secondary">Yes</button>
-                              <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">No</button>
-                            </div>
-                          </form>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="card ">                        
-                      <div class="card-body">
-                        <p class="card-text">{{workspace.name}}</p>
-                        <div class="workspace-description">
-                          <p class="card-text">{{workspace.description}}</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="btn-group workspace-btn">
-                            <a href="/workspace/{{workspace.id}}" type="button" class="btn btn-sm btn-outline-secondary">Enter</a>
-                            <a  data-bs-toggle="modal" type="button" class="btn btn-sm btn-outline-secondary" data-bs-target="#QuitModal_{{workspace.id}}">
-                              Quit
-                            </a> 
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {% endfor %}
-
-                  </div>
-                </div>
-              </div>
         </div>
     </div>
     <!-- JQuery -->

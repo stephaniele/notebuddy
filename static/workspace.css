@@ -87,6 +87,11 @@ h4{
 
 }
 
+#flash-message{
+    position: fixed;
+    z-index: 1000;
+}
+
 #workspace-description{
     font-style: italic;
 }

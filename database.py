@@ -133,6 +133,7 @@ def fileFactory(db):
                return file
         def delete(file):
             db.session.delete(file)
+            db.session.commit()
 
         def updatePath(self,path):
             self.file_path=path

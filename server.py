@@ -235,15 +235,12 @@ def upload_file(id):
 
         return redirect("/workspace/"+id)
 
-@app.route("/workspace/<workspace_id>/delete_file/<file_id>", methods=["GET","POST"])
+@app.route("/delete_file/<file_id>", methods=["GET","POST"])
 @login_required
-def delete_file(workspace_id,file_id):
-    workspace = db.Workspace.get(workspace_id)
+def delete_file(file_id):
     file = db.File.get(file_id)
+    workspace_id = file.workspace_owner.id
     db.File.delete(file)
-
-    workspace = db.Workspace.get(workspace_id)
-    print(workspace.files)
 
     return redirect(url_for('workspace', id=workspace_id))
 
@@ -251,7 +248,6 @@ def delete_file(workspace_id,file_id):
 @login_required
 def workspace(id):
     workspace = db.Workspace.get(id)
-    print(workspace.files)
 
     workspace_days = createDayRows(workspace)
     today = date.today()

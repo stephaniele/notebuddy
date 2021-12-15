@@ -10,21 +10,14 @@
     <!-- Awsome Font -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Notebuddy Workspace</title>
 </head>
 
 <body>
 
-<div class="container">
-	{% for message in get_flashed_messages() %}
-	<div class="alert alert-warning">
-		{{ message }}
-		<button type="button" id = "alert-btn" class="btn btn-secondary" data-bs-dismiss="alert">Close</button>
-	</div>
-	{% endfor %}
 
-	{% block page_content %}{% endblock %}
-</div>
 
 <div id="main-container">
     <nav id="sidebar">
@@ -48,8 +41,17 @@
             </li>   
         </ul>
     </nav>
+    <div class="container" id="flash-message">
+		{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning">
+			{{ message }}
+			<button type="button" id = "alert-btn" class="btn btn-secondary" data-bs-dismiss="alert">Close</button>
+		</div>
+		{% endfor %}
+	</div>
 
 	<div class="container" id="days">
+
 		<!-- days is dictionary. {weekday: int, dayStr: str, files: []} -->
 		{% if days|length > 0 %}
 			{% for day in days %}
@@ -66,7 +68,7 @@
 								        <img class="file-img" title="Download" src="/static/{{file.file_type}}.png">
 								    </a>
 								    {% if current_user.id == file.owner_id %}
-								    	<div class="overlay" role="button" data-bs-toggle="modal" data-bs-target="#deleteModal"></div>
+								    	<div class="overlay" id={{file.id}} role="button" data-bs-toggle="modal" data-bs-target="#deleteModal"></div>
 								    {% endif %}
 									<div class="card-text file-title">{{file.name}}</div>
 								</div>
@@ -79,7 +81,7 @@
 							      </div>
 							      <div class="modal-body">
 							      	<p>Are you sure you want to delete this file?</p>
-							      	<form id="delete-file" method = "POST" action="/workspace/{{workspace.id}}/delete_file/{{file.id}}" enctype="multipart/form-data">
+							      	<form id="delete-file" method = "POST" action="/delete_file/{{file.id}}" enctype="multipart/form-data">
 							      	</form>
 							      </div>
 							      <div class="modal-footer">
@@ -150,7 +152,12 @@
 	</div>
 </div>
 <!-- JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	$(".overlay").click(
+		console.log($(this))
+	)
+
+</script>
 <!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

@@ -131,10 +131,13 @@ def fileFactory(db):
                db.session.commit()
 
                return file
+        def delete(file):
+            db.session.delete(file)
+            db.session.commit()
 
         def updatePath(self,path):
-               self.file_path=path
-               db.session.commit()
+            self.file_path=path
+            db.session.commit()
 
         def updateName(self,name):
             self.name = name

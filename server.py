@@ -134,7 +134,6 @@ def create_workspace():
         for i in range(duration.days):
             day = datetime_end_date - timedelta(days=i)
             dayInt = str(day.weekday())
-            print(day,dayInt,days_of_week_str)
             if dayInt in days_of_week_str:
                 hasValidDay = True
 
@@ -236,10 +235,20 @@ def upload_file(id):
 
         return redirect("/workspace/"+id)
 
+@app.route("/delete_file/<file_id>", methods=["GET","POST"])
+@login_required
+def delete_file(file_id):
+    file = db.File.get(file_id)
+    workspace_id = file.workspace_owner.id
+    db.File.delete(file)
+
+    return redirect(url_for('workspace', id=workspace_id))
+
 @app.route("/workspace/<id>")
 @login_required
 def workspace(id):
     workspace = db.Workspace.get(id)
+
     workspace_days = createDayRows(workspace)
     today = date.today()
 
@@ -249,7 +258,7 @@ def workspace(id):
         upload_date = file.upload_date
         workspace_days.get(upload_date)["files"].append(file)
 
-    return render_template("workspace.html", workspace=workspace,days=workspace_days,today=today)
+    return render_template("workspace.html", workspace=workspace,days=workspace_days,today=today,current_user=current_user)
 
 
 @app.route('/workspace/download_note/<file_id>')

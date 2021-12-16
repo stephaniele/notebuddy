@@ -1,17 +1,20 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+body, html {
+    overflow-y:hidden;
+    height:100%;
+}
 .wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
+    height:100%;
+    display:flex;
+    overflow-y:hidden;
+    align-items: right;
 }
 
 #sidebar {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    position: fixed;
-    z-index: 1000;
 }
 
 #sidebar.active {
@@ -69,7 +72,6 @@ a, a:hover, a:focus {
 }
 
 #sidebar {
-    
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
@@ -106,10 +108,12 @@ a, a:hover, a:focus {
 }
 
 #content {
-    margin-left: 16%;
-    padding-left: 2%;
+    flex-grow: 1;
+    height:100%;
+    padding-left:20px;
+    padding-right:20px;
+    overflow-y:hidden;
 }
-
 
 .card{
     min-height: max(100%,100px); 
@@ -144,3 +148,13 @@ a, a:hover, a:focus {
     right:20px;
 }
 
+#flash-message{
+    position: fixed;
+    z-index: 1000;
+}
+
+#rows{
+    height:90%;
+    overflow-y: scroll;
+    padding: 20px;
+}

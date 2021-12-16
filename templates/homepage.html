@@ -18,7 +18,7 @@
   </head>
   <body>
     
-    <div class="container">
+    <div class="container" id="flash-message">
       {% for message in get_flashed_messages() %}
       <div class="alert alert-warning">
           {{ message }}
@@ -28,74 +28,7 @@
 
       {% block page_content %}{% endblock %}
     </div>
-
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Welcome to Notebuddy!</h3>
-            </div>
-    
-            <ul class="list-unstyled components">
-                <h4 id="profile_name" >{{current_user.name}}</h4>
-                <h6 id="profile_school"> {{current_user.school}} </h6>
-                <li>
-                  <a  data-bs-toggle="modal" data-bs-target="#ProfileModal">
-                    Edit Profile Information
-                  </a>                  
-                </li>
-                <li>
-                  <a  data-bs-toggle="modal" data-bs-target="#CreateModal">
-                    Create a Workspace
-                  </a> 
-                </li>
-                <li>
-                  <a  data-bs-toggle="modal" data-bs-target="#JoinModal">
-                    Join a Workspace
-                  </a> 
-                </li>
-                
-                <li>
-                    <a href="/logout">Sign Out</a>
-                </li>
-            </ul>
-        </nav>
-        
-        <!-- Modals for User Profile -->
-        <div  class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Edit Profile</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="mb-3">
-                    <label for="exampleInputName1" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="Username" name="username" placeholder="{{current_user.name}}">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputName3" class="form-label">Occupation</label>
-                    <input type="text" class="form-control" id="Occupation" name="occupation" placeholder="{{current_user.occupation}}">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputName2" class="form-label">School</label>
-                    <input type="text" class="form-control" id="School" name="school" placeholder="{{current_user.school}}">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail" class="form-label">Email</label>
-                    <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="{{current_user.email}}">
-                  </div>
-                  <button type="submit" class="btn btn-primary" onclick="load_profile();">Submit</button>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modals for Creating a Workspace-->
+    <!-- Modals for Creating a Workspace-->
         <div class="modal fade" id="CreateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -178,6 +111,37 @@
           </div>
         </div>
 
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Welcome to Notebuddy!</h3>
+            </div>
+    
+            <ul class="list-unstyled components">
+                <h4 id="profile_name" >{{current_user.name}}</h4>
+                <h6 id="profile_school"> {{current_user.school}} </h6>
+                <li>
+                  <a  data-bs-toggle="modal" data-bs-target="#ProfileModal">
+                    Edit Profile Information
+                  </a>                  
+                </li>
+                <li>
+                  <a  data-bs-toggle="modal" data-bs-target="#CreateModal">
+                    Create a Workspace
+                  </a> 
+                </li>
+                <li>
+                  <a  data-bs-toggle="modal" data-bs-target="#JoinModal">
+                    Join a Workspace
+                  </a> 
+                </li>
+                
+                <li>
+                    <a href="/logout">Sign Out</a>
+                </li>
+            </ul>
+        </nav>
         <div id="content">
             <div class="container mt-4">
                 <div class="row  justify-content-center">
@@ -186,8 +150,7 @@
                     </div>
                 </div>
             </div>
-            <div class="album py-5">
-              <div class="container">
+              <div class="container" id="rows">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-3 gx-3">
                   {% for workspace in workspaces %}
                   <!-- Quit Modal -->
@@ -200,8 +163,8 @@
                         <div class="modal-body">
                           <form action="/quit_workspace/{{workspace.id}}" method="POST">
                             <div class="container">
-                              <h3>Quit the workspace</h3>
-                              <h4>Are you sure you want to quit {{workspace.name}}?</h4>
+                              <h1>Quit the workspace</h1>
+                              <h3>Are you sure you want to quit {{workspace.name}}?</h3>
                               <button type="submit" class="btn  btn-lg btn-outline-secondary">Yes</button>
                               <button type="button" class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">No</button>
                             </div>
@@ -235,6 +198,39 @@
                   </div>
                 </div>
               </div>
+        </div>
+        
+        <!-- Modals for User Profile -->
+        <div  class="modal fade" id="ProfileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="exampleInputName1" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="Username" name="username" placeholder="{{current_user.name}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName3" class="form-label">Occupation</label>
+                    <input type="text" class="form-control" id="Occupation" name="occupation" placeholder="{{current_user.occupation}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputName2" class="form-label">School</label>
+                    <input type="text" class="form-control" id="School" name="school" placeholder="{{current_user.school}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail" class="form-label">Email</label>
+                    <input readonly type="email" class="form-control" id="exampleInputEmail" placeholder="{{current_user.email}}">
+                  </div>
+                  <button type="submit" class="btn btn-primary" onclick="load_profile();">Submit</button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
         </div>
     </div>
     <!-- JQuery -->
